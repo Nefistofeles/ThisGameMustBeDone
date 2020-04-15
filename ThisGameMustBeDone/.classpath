@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/ERDEM/Documents/eclipse/lib/windows"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/ERDEM/Documents/eclipse/lib/jar/jinput.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ERDEM/Documents/eclipse/lib/jar/lwjgl.jar" sourcepath="C:/Users/ERDEM/Documents/eclipse/lib/lwjgl-source-2.9.3.zip"/>
+	<classpathentry kind="lib" path="C:/Users/ERDEM/Documents/eclipse/lib/jar/lwjgl_util.jar" sourcepath="C:/Users/ERDEM/Documents/eclipse/lib/lwjgl-source-2.9.3.zip"/>
+	<classpathentry kind="lib" path="C:/Users/ERDEM/Documents/eclipse/lib/jar/lwjgl_util_applet.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ERDEM/Documents/eclipse/lib/jar/lwjgl-debug.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ERDEM/Documents/eclipse/lib/jar/PNGDecoder.jar" sourcepath="C:/Users/ERDEM/Documents/eclipse/lib/jar/PNGDecoder.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ERDEM/Documents/eclipse/lib/jar/slf4j-api-1.6.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ERDEM/Documents/eclipse/lib/jar/slf4j-simple-1.6.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ERDEM/Documents/eclipse/lib/jar/slick-util.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/jbox2d-library"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
