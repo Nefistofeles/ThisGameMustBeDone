@@ -29,6 +29,9 @@ public class Draw {
 	public static void render(int vertexCount) {
 		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, vertexCount);
 	}
+	public static void renderTriangleStrip(int vertexCount) {
+		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, vertexCount);
+	}
 	public static void disableVertexAttribArray(int size) {
 		for(int i = 0 ; i < size ; i++) {
 			GL20.glDisableVertexAttribArray(i);

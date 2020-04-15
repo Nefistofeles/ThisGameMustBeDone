@@ -1,4 +1,4 @@
-package renderer;
+package entities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,9 +12,9 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 import dataStructure.Texture;
-import entities.Entity;
 import gameEntity.Camera;
-import shaders.EntityShader;
+import renderer.Draw;
+import renderer.Renderable;
 import utils.DisplayManager;
 
 public class EntityRenderer implements Renderable{

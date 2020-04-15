@@ -1,4 +1,4 @@
-package shaders;
+package font;
 
 import shaderLoader.ShaderProgram;
 import utils.Matrix4;

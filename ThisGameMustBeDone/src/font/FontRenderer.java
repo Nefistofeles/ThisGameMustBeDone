@@ -1,4 +1,4 @@
-package renderer;
+package font;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,8 +7,9 @@ import java.util.Map;
 
 import dataStructure.Texture;
 import entities.Entity;
-import font.Text;
-import shaders.FontShader;
+import renderer.Draw;
+import renderer.EnableOpenGL;
+import renderer.Renderable;
 import utils.DisplayManager;
 
 public class FontRenderer implements Renderable{

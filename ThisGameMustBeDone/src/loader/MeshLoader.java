@@ -40,16 +40,19 @@ public class MeshLoader {
 		createVBO(0, 2, vertices);
 		createVBO(1, 2, textureCoords);
 		GL30.glBindVertexArray(0);
-		return new Mesh(vao, vertices.length) ;
+		return new Mesh(vao, vertices.length/2) ;
 	}
+	
 	private int createVAO() {
 		int vao = GL30.glGenVertexArrays() ;
+		vaos.add(vao) ;
 		GL30.glBindVertexArray(vao);
 		return vao ;
 	}
 	
 	private void createVBO(int index, int size, float[] data) {
 		int vbo = GL15.glGenBuffers() ;
+		vbos.add(vbo) ;
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo);
 		FloatBuffer buffer = createFloatBuffer(data);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
@@ -59,6 +62,7 @@ public class MeshLoader {
 	}
 	private void createIndices(int[] data) {
 		int vbo = GL15.glGenBuffers() ;
+		vbos.add(vbo) ;
 		GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, vbo);
 		IntBuffer buffer = createIntBuffer(data);
 		GL15.glBufferData(GL15.GL_ELEMENT_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);

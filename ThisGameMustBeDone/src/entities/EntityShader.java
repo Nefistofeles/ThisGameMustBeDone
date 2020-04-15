@@ -1,4 +1,4 @@
-package shaders;
+package entities;
 
 import shaderLoader.ShaderProgram;
 import utils.Matrix4;

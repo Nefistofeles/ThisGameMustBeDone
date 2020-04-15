@@ -15,13 +15,13 @@ public class Text {
 	private float worldPosition ;
 	private Matrix4 transformationMatrix ;
 	
-	public Text(String text, Vec2 position, float rotation, Vec2 scale, float worldPosition) {
+	public Text(String text, Vec2 position, float rotation, Vec2 scale) {
 		
 		this.text = text;
 		this.position = position;
 		this.rotation = rotation;
 		this.scale = scale;
-		this.worldPosition = worldPosition ;
+		worldPosition = 9 ;
 		this.transformationMatrix = Matrix4.createTransformationMatrix(position, rotation, scale);
 	}
 	

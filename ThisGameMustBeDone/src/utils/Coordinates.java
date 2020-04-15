@@ -9,8 +9,6 @@ import org.lwjgl.util.vector.Vector2f;
 
 public class Coordinates {
 	
-	//OpenGL coordinate düzlemine uygun denemek için oluþturulan sýnýf
-	
 /*	public static MeshData createMeshModel(Loader loader) {
 		return loader.getModelLoader().loadMeshG(Vertex1, TextureCoords) ;
 	}*/
@@ -56,6 +54,7 @@ public class Coordinates {
 	        0.f, 1
 			
 	};
+	
 
 /*	public static final float VertexLine[] = {
 			-1.0f, -1.0f,

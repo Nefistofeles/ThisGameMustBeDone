@@ -18,6 +18,7 @@ import font.FontLoader;
 import font.Text;
 import gameEntity.Camera;
 import gameEntity.MouseOrtho;
+import gui.GUI;
 import loader.FontMeshLoader;
 import loader.Loader;
 import loader.MeshLoader;
@@ -29,8 +30,6 @@ import utils.Coordinates;
 
 public class GameManager implements Renderable{
 	
-	//Düzenlenecek
-
 	private World world ;
 	private Renderer renderer ;
 	private Loader loader ;
@@ -48,9 +47,9 @@ public class GameManager implements Renderable{
 	public void init() {
 		loader = new Loader();
 		camera = new Camera();
-		renderer = new Renderer(camera, world);
-		renderer.init(); 
 		mouse = new MouseOrtho(camera);
+		renderer = new Renderer(loader,camera, world,mouse);
+		renderer.init();
 		pLoader = new PhysicsDataLoader(world) ;
 		
 		Texture texture = loader.getTextureLoader().loadTexture("player", TextureLoader.TextureNearest, TextureLoader.DEFAULT_BIAS);
@@ -58,8 +57,6 @@ public class GameManager implements Renderable{
 		OBJFileLoader oLoader = new OBJFileLoader();
 		Mesh mesh = oLoader.loadObjFile("untitled", loader);
 		
-
-
 		entity = new Player(mesh,texture, new Vec2(0,0), 0, new Vec2(5,5),0);
 		pLoader.createPhysics(entity, Coordinates.getVertexVector(entity.getScale()), entity.getScale(), BodyType.DYNAMIC, true, ShapeType.POLYGON, 0.1f, 0.1f, 0.1f);
 		renderer.addEntity(entity);
@@ -69,9 +66,12 @@ public class GameManager implements Renderable{
 		renderer.addEntity(entity2);
 
 		FontMeshLoader fmLoader = new FontMeshLoader("arial", loader);
-		text = new Text("Tarkan", new Vec2(0,0), 0, new Vec2(5,5), 0);
+		text = new Text("Tarkan", new Vec2(0,0), 0, new Vec2(5,5));
 		fmLoader.loadMeshforFont(text);
 		renderer.addText(text, fmLoader.getTexture());
+		
+		GUI g = new GUI(loader.getTextureLoader().loadTexture("button", TextureLoader.TextureLinear, 0), new Vec2(0,0), new Vec2(15,15));
+		renderer.addGUI(g);
 		
 	}
 
