@@ -28,6 +28,8 @@ import renderer.Renderer;
 import utils.Coordinates;
 
 public class GameManager implements Renderable{
+	
+	//Düzenlenecek
 
 	private World world ;
 	private Renderer renderer ;
