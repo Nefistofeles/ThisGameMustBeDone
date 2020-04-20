@@ -8,8 +8,6 @@ import org.jbox2d.common.Vec3;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Matrix4f;
 
-import gameEntity.Camera;
-
 public class Maths {
 	
 	//Gerekebilecek Matematik fonksiyonlarý ve deðerleri
@@ -24,6 +22,8 @@ public class Maths {
 	public static final double LINE_HEIGHT = 0.7f ;//0.03f;
 	public static final Random random = new Random();
 	public static final float aspectRatio = (float)Display.getWidth() / (float)Display.getHeight() ;
+	public static final Vec2 min = new Vec2(-1,-1) ;
+	public static final Vec2 max = new Vec2(1,1) ;
 	
 	public static float random( float min, float max )
 	{

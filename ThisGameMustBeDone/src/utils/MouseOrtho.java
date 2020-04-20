@@ -1,4 +1,4 @@
-package gameEntity;
+package utils;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.common.Vec3;
@@ -6,9 +6,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import renderer.Renderer;
-import utils.DisplayManager;
-import utils.Matrix4;
-import utils.Vec4;
 
 
 public class MouseOrtho {

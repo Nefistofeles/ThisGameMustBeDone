@@ -5,6 +5,7 @@ import org.jbox2d.dynamics.World;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
+import loader.Creator;
 import renderer.EnableOpenGL;
 import utils.DisplayManager;
 
@@ -13,7 +14,7 @@ public class Game implements Runnable{
 	private Thread thread ;
 	private DisplayManager display ;
 	private GameManager game ;
-	private World world ;
+	private Creator creator ;
 	private boolean isRun ;
 
 	public Game() {
@@ -48,8 +49,8 @@ public class Game implements Runnable{
 	private void init() {
 		display = new DisplayManager();
 		display.create(1366,768);
-		world = new World(new Vec2(0,0)) ;
-		game = new GameManager(world);
+		creator = new Creator();
+		game = new GameManager(creator);
 		game.init();
 		
 		EnableOpenGL.culling(true);
@@ -64,7 +65,7 @@ public class Game implements Runnable{
 		
 		while(!Display.isCloseRequested() && isRun) {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_STENCIL_BUFFER_BIT );
-			world.step(DisplayManager.getFrameTime(), 6, 2);
+			creator.getWorld().step(DisplayManager.getFrameTime(), 6, 2);
 			game.update();
 			game.render();
 			display.update();

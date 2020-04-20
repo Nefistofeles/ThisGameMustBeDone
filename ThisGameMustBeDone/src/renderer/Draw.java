@@ -18,11 +18,14 @@ public class Draw {
 			GL20.glEnableVertexAttribArray(i);
 		}
 	}
+	public static void enableTexture(int id) {
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
+	}
 	public static void enableTexture(Texture texture) {
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getTextureID());
 	}
-	
 	public static void renderOptimize(int vertexCount) {
 		GL11.glDrawElements(GL11.GL_TRIANGLES,vertexCount , GL11.GL_UNSIGNED_INT, 0);
 	}

@@ -1,11 +1,7 @@
-package gameEntity;
+package utils;
 
 import org.jbox2d.common.Vec3;
 import org.lwjgl.input.Keyboard;
-
-import utils.DisplayManager;
-import utils.Maths;
-import utils.Matrix4;
 
 public class Camera {
 

@@ -8,13 +8,29 @@ public class Texture {
 	private int textureIndexX ;
 	private int textureIndexY ;
 	
-
 	public Texture(int textureID) {
 		this.textureID = textureID;
 		numberOfRows = 1 ;
 		numberOfColumn = 1 ;
 		textureIndexX = 0 ;
 		textureIndexY = 0 ;
+	}
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Texture texture = new Texture(this.textureID) ;
+		texture.setTextureRowColumn(this.numberOfRows, this.numberOfColumn);
+		return texture ;
+	}
+	
+	public Texture getClone() {
+		Texture texture = null ;
+		try {
+			return (Texture) this.clone() ;
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this ;
 	}
 
 	public void setTextureRowColumn(int numberOfRows, int numberOfColumn) {

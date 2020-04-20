@@ -5,6 +5,9 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.Fixture;
 
+import animationSystem.Animation;
+import animationSystem.AnimationData;
+import animationSystem.AnimationEnum;
 import dataStructure.Mesh;
 import dataStructure.Texture;
 import utils.Matrix4;
@@ -18,10 +21,15 @@ public abstract class Entity {
 	protected float worldPosition ;
 	protected Mesh mesh ;
 	protected Matrix4 transformationMatrix ;
+	protected Vec2 speed ;
 	
 	protected Body body ;
 	protected Fixture fixture ;
 	protected Shape shape ;
+	protected Animation animation ;
+	protected AnimationData animationData ;
+	protected Vec2 direction ;
+	protected boolean isDead ;
 	
 	public Entity(Mesh mesh,Texture texture,  Vec2 position, float rotation, Vec2 scale, float worldPosition) {
 	
@@ -35,8 +43,14 @@ public abstract class Entity {
 		this.fixture = null ;
 		this.shape = null ;
 		transformationMatrix = Matrix4.createTransformationMatrix(position, rotation, scale) ;
-	}
+		speed = new Vec2(100,100) ;
+		animation = null ;
+		animationData = null ;
+		direction = new Vec2(0,0) ;
+		isDead = false ;
 	
+	}
+
 	public void setPhysics(Body body, Shape shape, Fixture fixture) {
 		this.body = body ;
 		this.fixture = fixture ;
@@ -45,12 +59,17 @@ public abstract class Entity {
 		this.rotation = body.getAngle() ;
 	}
 	
+	protected abstract void attack(Entity entity);
+	protected abstract void hurt(Entity entity);
+	protected abstract void died();
+	public abstract void update() ;
+	
 	public Matrix4 getTransformationMatrix() {
 		transformationMatrix = Matrix4.updateTransformationMatrix(transformationMatrix, position, rotation, scale) ;
 		return transformationMatrix;
 	}
 	
-	public abstract void update() ;
+
 
 	public Vec2 getPosition() {
 		return position;
@@ -100,5 +119,17 @@ public abstract class Entity {
 	}
 	public Shape getShape() {
 		return shape;
+	}
+	public Vec2 getDirection() {
+		return direction;
+	}
+	public void setDirection(Vec2 direction) {
+		this.direction = direction;
+	}
+	public boolean isDead() {
+		return isDead;
+	}
+	public void setDead(boolean isDead) {
+		this.isDead = isDead;
 	}
 }

@@ -8,7 +8,7 @@ import utils.DisplayManager;
 
 public class Animation {
 
-	private Texture texture;
+	private Texture texture ;
 	private AnimationData data;
 	private float time;
 	

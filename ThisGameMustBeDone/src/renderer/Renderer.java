@@ -8,23 +8,24 @@ import entities.Entity;
 import entities.EntityRenderer;
 import font.FontRenderer;
 import font.Text;
-import gameEntity.Camera;
-import gameEntity.MouseOrtho;
 import gui.GUI;
 import gui.GUIRenderer;
+import loader.Creator;
 import loader.Loader;
+import utils.Camera;
+import utils.MouseOrtho;
 
 public class Renderer implements Renderable{
 
-	private Camera camera ;
-	private World world ;
-	private Loader loader ;
 	private EntityRenderer entityRenderer ;
 	private FontRenderer fontRenderer ;
 	private GUIRenderer guiRenderer ;
+	private Camera camera ;
+	private World world ;
 	private MouseOrtho mouse ;
+	private Loader loader ;
 	
-	public Renderer(Loader loader, Camera camera, World world, MouseOrtho mouse) {
+	public Renderer(Loader loader, MouseOrtho mouse, Camera camera, World world) {
 		this.camera = camera ;
 		this.world = world ;
 		this.loader = loader ;
@@ -33,7 +34,7 @@ public class Renderer implements Renderable{
 
 	@Override
 	public void init() {
-		entityRenderer = new EntityRenderer(camera);
+		entityRenderer = new EntityRenderer(camera, world);
 		entityRenderer.init();
 		fontRenderer = new FontRenderer();
 		fontRenderer.init();

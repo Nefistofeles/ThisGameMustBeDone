@@ -52,11 +52,11 @@ public class DisplayManager {
 	}
 	
 	public void update() {
-		now = getTime();
-		delta = (now - lastTime) / 1000 ;
-		now = lastTime ;
-		
 		Display.update();
+		
+		now = getTime();
+		delta = (now - lastTime) / 1000f ;
+		lastTime = now ;
 		if(Keyboard.isKeyDown(Keyboard.KEY_N)) {
 			GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE );
 		}else if(Keyboard.isKeyDown(Keyboard.KEY_M)) {

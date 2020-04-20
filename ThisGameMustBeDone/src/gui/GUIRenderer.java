@@ -8,13 +8,13 @@ import java.util.Map;
 
 import dataStructure.Mesh;
 import dataStructure.Texture;
-import gameEntity.MouseOrtho;
 import loader.Loader;
 import renderer.Draw;
 import renderer.EnableOpenGL;
 import renderer.Renderable;
 import utils.Coordinates;
 import utils.DisplayManager;
+import utils.MouseOrtho;
 
 public class GUIRenderer implements Renderable{
 	

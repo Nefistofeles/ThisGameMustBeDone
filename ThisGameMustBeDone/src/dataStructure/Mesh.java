@@ -11,6 +11,21 @@ public class Mesh {
 		this.vertexCount = vertexCount;
 	}
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		Mesh mesh = new Mesh(this.meshID, this.vertexCount);
+		return mesh ;
+	}
+	public Mesh getClone() {
+		Mesh mesh = null ;
+		try {
+			mesh = (Mesh) clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mesh ;
+	}
 	public int getMeshID() {
 		return meshID;
 	}

@@ -22,29 +22,30 @@ public class PhysicsDataLoader {
 	public PhysicsDataLoader(World world) {
 		this.world = world ;
 	}
-	private Body loadBody(Entity entity, BodyType bodyType, boolean fixedRotation) {
+	public Body loadBody(Entity entity, BodyType bodyType, boolean fixedRotation, boolean isBullet) {
 		BodyDef bodydef = new BodyDef();
 		bodydef.type = bodyType ; 
 		bodydef.position = entity.getPosition() ;
 		bodydef.fixedRotation = fixedRotation ;
-		bodydef.linearDamping = 0.01f ; 
+		bodydef.linearDamping = 5 ; 
 		bodydef.userData = entity ;
-		
+		bodydef.bullet = isBullet ;
 		return world.createBody(bodydef) ;
 	}
-	private Fixture loadFixture(Shape shape, Body body, float restitution, float density, float friction) {
+	public Fixture loadFixture(Shape shape, Body body, float restitution, float density, float friction, boolean isSensor) {
 		FixtureDef fixturedef = new FixtureDef();
 		fixturedef.restitution = restitution;
 		fixturedef.shape = shape ;
 		fixturedef.density = density ;
 		fixturedef.friction = friction;
+		fixturedef.isSensor = isSensor ;
 		Fixture fixture = body.createFixture(fixturedef) ;
 		
 		return fixture ;
 	}
 	public void createPhysics(Entity entity, Vec2[] vertices,Vec2 scale,BodyType bodyType, boolean fixedRotation,
-			ShapeType shapeType, float restitution, float density, float friction) {
-		Body body = loadBody(entity, bodyType, fixedRotation) ;
+			ShapeType shapeType, float restitution, float density, float friction,boolean isSensor, boolean isBullet ) {
+		Body body = loadBody(entity, bodyType, fixedRotation, isBullet) ;
 		
 		Shape shape = null ;
 		if(shapeType == ShapeType.POLYGON) {
@@ -52,7 +53,7 @@ public class PhysicsDataLoader {
 		}else if(shapeType == ShapeType.CIRCLE) {
 			shape = loadShape(entity.getPosition(), scale.x) ;
 		}
-		Fixture fixture = loadFixture(shape, body, restitution, density, friction); 
+		Fixture fixture = loadFixture(shape, body, restitution, density, friction, isSensor); 
 		entity.setPhysics(body, shape, fixture);
 		
 	}
