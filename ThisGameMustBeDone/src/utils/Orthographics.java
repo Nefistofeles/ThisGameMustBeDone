@@ -4,6 +4,10 @@ import org.lwjgl.opengl.Display;
 
 public class Orthographics {
 
+	/**
+	 * Belli bir orana göre daha güzel görsellik oluþturulsun diye kullanýlan ekran geniþletme sýnýfýdýr.
+	 * 
+	 */
 	private static final float scaleFactor = 1.77f ;
 	private Matrix4 projectionMatrix ;
 	private float x, y, width, height ;

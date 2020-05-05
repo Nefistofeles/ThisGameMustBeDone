@@ -3,10 +3,10 @@ package animationSystem;
 public enum AnimationEnum {
 
 	idle,
+	walk,
 	run,
 	attack,
-	jump,
-	fall,
 	crauch,
+	dead,
 	hurt;
 }

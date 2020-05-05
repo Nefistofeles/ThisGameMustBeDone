@@ -32,11 +32,20 @@ public class Texture {
 		}
 		return this ;
 	}
-
+	/**
+	 * resim eðer atlas ise yani birden fazla resim içeriyorsa bölmek için girilmesi gereken deðerler.
+	 * @param numberOfRows		satýrda kaç tane resim var
+	 * @param numberOfColumn	oluþtuðu sütun sayýsý
+	 */
 	public void setTextureRowColumn(int numberOfRows, int numberOfColumn) {
 		this.numberOfRows = numberOfRows ;
 		this.numberOfColumn = numberOfColumn ;
 	}
+	/**
+	 * parçalanmýþ resmin hangi indextekinin gösterildiðini bilgisini alan metottur.
+	 * @param textureIndexX		sütun numarasý
+	 * @param textureIndexY		satýr numarasý
+	 */
 	public void setTextureIndex(int textureIndexX , int textureIndexY) {
 		this.textureIndexX = textureIndexX ;
 		this.textureIndexY = textureIndexY ;
@@ -56,13 +65,21 @@ public class Texture {
 	public int getTextureIndexY() {
 		return textureIndexY;
 	}
+	/**
+	 * Temel bir texture atlas içinde bulunan birden fazla texture için parçalama metodu. textureIndexX istenilen index deðeri numberOfRows toplam satýrdaki resim sayýsýný ifade ediyor.
+	 * 
+	 * @return textureýn x pozisyonu
+	 */
 	public float getTextureXoffSet() {
 		int column = textureIndexX % numberOfRows ;
 		return (float)column / (float) numberOfRows ;
 	}
+	/**
+	 * 
+	 * @return textureýn y pozisyoun
+	 */
 	public float getTextureYoffSet() {
 		int row = textureIndexY % numberOfColumn ;
-	//	int row = (int)Math.floor(textureIndexY / texture.getNumberOfRows()) ;
 		return (float) row / (float) numberOfColumn ;
 	}
 	public int getNumberOfRows() {

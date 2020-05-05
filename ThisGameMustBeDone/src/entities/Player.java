@@ -17,18 +17,9 @@ import utils.MouseOrtho;
 
 public class Player extends Entity {
 
-	private Creator creator ;
-	private Entity gun ;
+	public Player(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition,AnimationData animationData, Creator creator) {
+		super(mesh, texture, position, rotation, scale, worldPosition,animationData, creator);
 
-	public Player(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition, Creator creator) {
-		super(mesh, texture, position, rotation, scale, worldPosition);
-		this.creator = creator ;
-		animationData = new AnimationData();
-		animationData.addAnimationData(AnimationEnum.idle, 4, 0);
-		animationData.addAnimationData(AnimationEnum.run, 6, 1);
-		animation = new Animation(texture, animationData);
-
-		
 		this.speed.x = 300 ;
 		this.speed.y = 300 ;
 
@@ -40,10 +31,17 @@ public class Player extends Entity {
 		if(Mouse.isButtonDown(0)){
 			
 		}
+		//animasyonun çalýþtýrýlmasý
+		animation.animate(AnimationEnum.idle, 15);
 	}
 
+	/**
+	 * karakterin hareket metodudur. 
+	 * karakterin mouseun durumuna göre mause doðru bakmasýný saðlayan matematiksel iþlemleri de içerir.
+	 */
 	private void move() {
 		
+		//karakterin fareye doðru dönmesi için yazýlmýþ matematiksel formül
 		Vec2 mousePosition = creator.getMouse().getMousePos2();
 		float radians = (float)Math.atan2(mousePosition.y - position.y, mousePosition.x - position.x) ;
 		float degree = (float) (radians * 180 / Math.PI) ; 
@@ -51,6 +49,7 @@ public class Player extends Entity {
 		//Vec2 degreeVector = new Vec2((float)Math.cos(radians),(float)Math.sin(radians)); 
 		//body.applyForceToCenter(new Vec2( speed.x*degreeVector.x , speed.y * degreeVector.y));
 		
+		//klavye ile karakterin dünyada hareket etmesi
 		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			direction.y = 1;
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
@@ -65,7 +64,6 @@ public class Player extends Entity {
 		} else {
 			direction.x = 0;
 		}
-		animation.animate(AnimationEnum.idle);
 
 		body.applyForceToCenter(new Vec2(speed.x * direction.x , speed.y * direction.y));
 		
@@ -86,9 +84,6 @@ public class Player extends Entity {
 	protected void died() {
 		
 		
-	}
-	public void setGun(Entity gun) {
-		this.gun = gun ;
 	}
 
 }

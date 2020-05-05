@@ -9,9 +9,21 @@ import org.lwjgl.util.vector.Vector2f;
 
 public class Coordinates {
 	
+	/**
+	 * Bu sýnýf hazýr koordinat düzlemi deðerlerin hazýr kayýtlý halini barýndýrýr. Deneme amaçlý kullanýlan sýnýftýr.
+	 *
+	 */
+	
 /*	public static MeshData createMeshModel(Loader loader) {
 		return loader.getModelLoader().loadMeshG(Vertex1, TextureCoords) ;
 	}*/
+	
+	/**
+	 * OpenGL'de daire oluþturmak için yazýlan özel metot.
+	 * @param radius		dairerin yarýçapý
+	 * @param position		dairenin pozisyonu
+	 * @return				dairenin tüm koordinatlarýný tutan float array
+	 */
 	public static float[] create(float radius, Vector2f position) {
 		int segment = 20 ;
 		Vector2f p = new Vector2f(0, 0) ;
@@ -119,6 +131,11 @@ public class Coordinates {
 			1.0f,1.0f,
 			1.0f,-1.0f
 	};
+	/**
+	 * iki noktadan oluþan bir vektörün normalini bulan fonksiyon.
+	 *TODO : Düzenlenmesi gerek.
+	 * 
+	 */
 	public static float[] normal() {
 		Vec2[] vertices = getVertexVector(new Vec2(1,1)) ; 
 		Vec2[] normals = new Vec2[vertices.length];

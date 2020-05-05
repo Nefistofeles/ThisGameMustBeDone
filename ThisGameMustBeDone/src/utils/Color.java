@@ -3,6 +3,9 @@ package utils;
 public class Color {
 	
 	//renk classý
+	/**
+	 * Renk deðerlerinin tutulduðu sýnýf.
+	 */
 
 	public float r,g,b,alpha ;
 

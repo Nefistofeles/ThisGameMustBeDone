@@ -19,22 +19,27 @@ public class Animation {
 		time = 0;
 		
 	}
-
-	public boolean animate(AnimationEnum a) {
+	/**
+	 * 
+	 * @param a ekranda dönecek resim setinin idsi
+	 * @param fps oynatılacak resmin fpsi
+	 * 
+	 */
+	public void animate(AnimationEnum a, int fps) {
 		Vector2f v = data.getAnimationData().get(a);
 		time += DisplayManager.getFrameTime();
 		texture.setTextureIndexY((int)v.y);
-		if (time > DisplayManager.getFrameTime() * 60 / 8) {
+		if (time > DisplayManager.getFrameTime() * fps) {
 			time = 0;
 			texture.setTextureIndexX(texture.getTextureIndexX() + 1);
 			if (texture.getTextureIndexX() >=(int) v.x) {
 				texture.setTextureIndexX((int) 0);
-				return false ;
+				//return false ;
 			}
 
 		}
 		
-		return true ;
+		//return true ;
 
 	}
 

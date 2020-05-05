@@ -11,6 +11,11 @@ import org.lwjgl.util.vector.Vector4f;
 
 public class Matrix4 {
 	//lwjgl içinde bulunan Matrix4f classýný kullanarak 2 boyuta uyarlanmýþ yeni Matrix4 classý.
+	//Aslýnda openglin kendi matrix4f sýnýfý var fakat 
+	
+	/**
+	 * Aslýnda openglin kendi {@code Matrix4f} sýnýfý var fakat {@code Matrix4} sýnýfý {@code Matrix4f} sýnýfýný kullanarak 2 boyutlu dünyaya adapte edilmiþ halidir.
+	 */
 
 	private Matrix4f matrix;
 

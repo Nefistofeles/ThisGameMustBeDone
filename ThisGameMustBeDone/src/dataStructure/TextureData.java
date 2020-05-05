@@ -3,6 +3,10 @@ package dataStructure;
 import java.nio.ByteBuffer;
 
 public class TextureData {
+	
+	/**
+	 * Textureýn ilk PNGDecoder tarafýndan okunurken uzunluk ve yüksekliðini ayrýca byte þeklinde bir bufferda bilgilerini tutmak için kullanýlan sýnýftýr.
+	 */
 
 	private int width;
 	private int height ;

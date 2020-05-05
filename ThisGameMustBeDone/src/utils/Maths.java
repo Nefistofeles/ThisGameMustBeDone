@@ -11,29 +11,43 @@ import org.lwjgl.util.vector.Matrix4f;
 public class Maths {
 	
 	//Gerekebilecek Matematik fonksiyonlarý ve deðerleri
+	/**
+	 * Matematik sýnýfýdýr. Programýn ihtiyaçlarýna göre þekillenmiþ bazý matematik formmüllerinin koda dökülmüþ halidir.
+	 */
 	
 	public static final float FPS =DisplayManager.getFrameTime() ;
 	public static final Vec2 GRAVITY = new Vec2(0 , -9.81f * 8) ;	//0 , -50
-	public static final float EPSILON = 0.0001f;
-	public static final float EPSILONSQ = EPSILON * EPSILON ;
-	public static final float RESTING = new Vec2(GRAVITY.x * FPS, GRAVITY.y * FPS).lengthSquared() + EPSILON ;
-	public static final float BIAS_RELATIVE = 0.95f ;
-	public static final float BIAS_ABSOLUTE = 0.01f ;
 	public static final double LINE_HEIGHT = 0.7f ;//0.03f;
 	public static final Random random = new Random();
 	public static final float aspectRatio = (float)Display.getWidth() / (float)Display.getHeight() ;
 	public static final Vec2 min = new Vec2(-1,-1) ;
 	public static final Vec2 max = new Vec2(1,1) ;
 	
+	/**
+	 * belli aralýkta random float deðer hesaplama
+	 * @param min	min deðer
+	 * @param max	max deðer
+	 * @return		min-max arasý random deðer
+	 */
 	public static float random( float min, float max )
 	{
 		return (float)((max - min) * Math.random() + min);
 	}
-
+	/**
+	 * belli aralýkta random int deðer hesaplama
+	 * @param min	min deðer
+	 * @param max	max deðer
+	 * @return		min-max arasý random deðer
+	 */
 	public static int random( int min, int max )
 	{
 		return (int)((max - min + 1) * Math.random() + min);
 	}
+	/**
+	 * listeyi arraya dönüþtüren metot.
+	 * @param data	list data
+	 * @return		array data
+	 */
 	public static float[] listToArray(List<Float> data) {
 		float[] array = new float[data.size()];
 		for (int i = 0; i < array.length; i++) {
@@ -42,6 +56,11 @@ public class Maths {
 		}
 		return array;
 	}
+	/**
+	 * listeyi Vec2 türünde arraya dönüþtüren metot.
+	 * @param data	list türünde data
+	 * @return		Vec2 türünde array
+	 */
 	public static Vec2[] listToVec2Array(List<Float> data) {
 		Vec2[] array = new Vec2[data.size() / 2];
 		for (int i = 0; i < array.length; i+=2) {
@@ -50,6 +69,14 @@ public class Maths {
 		}
 		return array;
 	}
+	/**
+	 * girilen deðerlere göre opengle uygun koordinatlarý giren bir metot.
+	 * @param data		girilen deðerlerin kaydedileceði liste
+	 * @param x			baþlangýç noktasý x deðeri
+	 * @param y			baþlangýç noktasý y deðeri
+	 * @param width		objenin geniþliði
+	 * @param height	objenin uzunluðu
+	 */
 	public static void addMeshAttachment(List<Float> data, double x, double y, double width, double height) {
 		data.add((float) x);		data.add((float) y);
 		data.add((float) x);		data.add((float) height);
@@ -78,6 +105,11 @@ public class Maths {
 		return matrix ;
 	}*/
 
+	/**
+	 * Oyun kamerasýnýn matrixe dökülmesi
+	 * @param camera	Camera sýnýfýndan bir nesne
+	 * @return			camera sýnýfýnýn özelliklerini taþýyan matrix
+	 */
 	public static Matrix4 createViewMatrix(Camera camera) {
 		Matrix4 matrix = new Matrix4();
 		matrix.getMatrix().setIdentity() ;
@@ -87,6 +119,12 @@ public class Maths {
 		
 		return matrix ;
 	}
+	/**
+	 * Oyundaki kamera sýnýfýnýn durmadan bir matrix sýnfý oluþturmasýný engellemek için olan matrixi kullanarak güncelleme yapmasýný saðlayan metot.
+	 * @param matrix	Matrix türünde sýnýf
+	 * @param camera	Camera türünde sýnýf
+	 * @return			matrix deðerinin tekrar camera sýnýfýna göre þekillendirmiþ hali.
+	 */
 	public static Matrix4 updateViewMatrix(Matrix4 matrix, Camera camera) {
 		matrix.getMatrix().setIdentity() ;
 		Vec3 pos = new Vec3(-camera.getPosition().x , -camera.getPosition().y, -camera.getPosition().z) ;
@@ -147,6 +185,13 @@ public class Maths {
 
         
 	}*/
+	/**
+	 *  dünya oluþturulurken bu dünyanýn oluþturulmasý aslýnda verilen koordinat verilerinin bir çarpan ile çarpýlýp ekrana gösterilmesi ile oluþur. Ýki boyutlu dünya için bu orthographics
+	 * camera matrix metodu kullanýlýr ve shaderlarda bu deðer verilen koordinat deðerleri ile çarpýlýr.
+	 * Bir kutunun koordinatlarý giriliyormuþ gibi düþünülebilir.
+	 * 
+	 * {@link https://en.wikipedia.org/wiki/Orthographic_projection}
+	 */
 	public static Matrix4 orthoMatrix(float left ,float right , float bottom , float top, float near , float far ) {
 		Matrix4 matrix = new Matrix4();
 		matrix.getMatrix().setIdentity() ;
@@ -172,6 +217,13 @@ public class Maths {
 		return matrix ;
 	}
 	
+	/**
+	 * 3 boyutlu dünyalar oluþturmak için kullanýlan matrix metot.
+	 * 
+	 * {@link https://en.wikipedia.org/wiki/3D_projection}
+	 * 
+	 * @return
+	 */
 	public static Matrix4 createProjectionMatrix() {
 		final float FOV = 70;
 		final float NEAR_PLANE = 0.1f;
@@ -191,9 +243,11 @@ public class Maths {
 		projectionMatrix.getMatrix().m33 = 0;
 		return projectionMatrix;
 	}
+/*
 	public static float cross(Vec2 left , Vec2 right) {
 		return left.x * right.y - left.y * right.x ;
 	}
+
 	public static Vec2 cross(float left , Vec2 right) {
 		Vec2 v = new Vec2(0,0) ;
 		v.x = right.y * -left ;
@@ -206,7 +260,14 @@ public class Maths {
 		v.y = left.x * -right ;
 		return v ;
 	}
+	*/
 	//sütun satýr olacak
+	/**
+	 * normalde 4x4 matrix 4x1 vector ile çarpýlýr fakat bu metot sadece matrixin soldan 2x2 lik kýsmý ile çarpým yapar. Çünkü 2 boyutlu dünyayý ilgilendiren kýsým oraýdýr.
+	 * @param m	Matrix deðeri
+	 * @param v	Vector deðeri
+	 * @return	yeni matrix ile çarpýlmýþ vector deðeri
+	 */
 	public static Vec2 MatrixMul(Matrix4 m , Vec2 v) {
 		float x = m.getMatrix().m00 * v.x ;
 		float y =m.getMatrix().m10 * v.y ;
@@ -214,7 +275,11 @@ public class Maths {
 		float z = m.getMatrix().m11 * v.y ;
 		return new Vec2(x+y , w+z) ;
 	}
-
+	/**
+	 * Matrix transpozunu alan metottur.
+	 * @param matrix	transpozu alýnacak matrix sýnýfý
+	 * @return		transpozu alýnmýþ yeni matrix
+	 */
 	public static Matrix4 transpose(Matrix4 matrix) {
 		float x = matrix.getMatrix().m00 ;
 		float y=  matrix.getMatrix().m01 ;
@@ -228,34 +293,55 @@ public class Maths {
 		matrix1.getMatrix().m11 = w ;
 		return matrix1 ;
 	}
+	/**
+	 * Ýki noktadan oluþan doðruya inilen dikmeyi hesaplar
+	 */
 	public static Vec2 perpendicular(Vec2 left , Vec2 right) {
 		float x = -(left.y - right.y ) ;
 		float y = (left.x - right.x ) ;
 		return new Vec2(x,y) ;
 	}
+	/**
+	 * iki vectorün dot product iþlemini gerçekleþtirir.
+	 * @param left		2 boyutlu vector.
+	 * @param right		2 boyutlu vector.
+	 * @return			float dot product sonucu.
+	 */
 	public static float dot(Vec2 left , Vec2 right) {
 		return left.x * right.x + left.y * right.y ;
 	}
-
+	/**
+	 * gönderilen bir vectorü belli bir sayý ile geniþletme
+	 * @param v		vector deðeri
+	 * @param s		çarpan
+	 * @return		geniþletilmiþ vector.
+	 */
 	public static Vec2 VectorScale(Vec2 v, float s) {
 		Vec2 a = new Vec2(0,0) ;
 		a.x = v.x * s ;
 		a.y = v.y * s ;
 		return a ;
 	}
-	
+	/**
+	 * pisagor teoremi sonucunu bulan formül
+	 * @param f1	float deðer
+	 * @param f2	float deðer
+	 * @return		hipotenüs
+	 */
 	public static float PythagoreanSolve(float f1 , float f2) {
 		return (float) Math.sqrt(f1* f1 + f2* f2) ;
 	}
-	public static boolean gt( float a, float b ){
-		return a >= b * BIAS_RELATIVE + a * BIAS_ABSOLUTE;
-	}
-	
+
+	/**
+	 * Bir vectörü negatif deðerini alýr
+	 * @param v		Vector deðeri
+	 * @return		negatifi alýnmýþ vector.
+	 */
 	public static Vec2 negate(Vec2 v) {
 		Vec2 a = new Vec2(-v.x , -v.y);
 		return a ;
 	}
-	public static Vec2 normalise(Vec2 src, Vec2 dest){
+/*	public static Vec2 normalise(Vec2 src, Vec2 dest){
 		
 		float lenSq = src.lengthSquared();
 
@@ -267,7 +353,14 @@ public class Maths {
 		}
 		return dest ;
 	}
-	
+	*/
+	/**
+	 * Vectorü belli bir radian deðerinde döndüren matematiksel formül
+	 * {@link https://matthew-brett.github.io/teaching/rotation_2d.html}
+	 * @param v			döndürülecek vector
+	 * @param radians	radian deðeri
+	 * @return			döndürülmüþ vector.
+	 */
 	public static Vec2 rotateVector2(Vec2 v , float radians) {
 		Vec2 r = new Vec2(0,0);
 		float x =(float) ((float) v.x * Math.cos(radians) - (float)v.y *Math.sin(radians)) ;
@@ -277,12 +370,5 @@ public class Maths {
 		r.y = y ;
 		return r ;
 	}
-	public static float distanceSquare( Vec2 a, Vec2 b )
-	{
-		float dx = a.x - b.x;
-		float dy = a.y - b.y;
 
-		return dx * dx + dy * dy;
-	}
-	
 }

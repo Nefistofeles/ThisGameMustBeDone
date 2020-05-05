@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL30;
 
 import dataStructure.Texture;
 import renderer.Draw;
+import renderer.EnableOpenGL;
 import renderer.Renderable;
 import utils.Camera;
 import utils.DisplayManager;
@@ -34,6 +35,7 @@ public class EntityRenderer implements Renderable{
 		this.world = world ;
 	}
 	
+
 	@Override
 	public void init() {
 		shader = new EntityShader();
@@ -68,10 +70,12 @@ public class EntityRenderer implements Renderable{
 		shader.start();
 		shader.loadViewMatrix(camera.getViewMatrix());
 		//EnableOpenGL.blendFunc(true);
+		
 		for(Texture texture : entities.keySet()) {
 			List<Entity> entityList = entities.get(texture) ;
 			
 			Draw.enableTexture(texture);
+			//texture atlasda sadece seçilen resmin ekrana çizdirilmesi için shadera gönderilen bilgiler. Ayrýca animasyon içinde kullanýlýyor.
 			shader.loadTextureProperty(texture.getNumberOfRows(), texture.getNumberOfColumn(), texture.getTextureXoffSet(), texture.getTextureYoffSet());
 			
 			for(Entity entity : entityList) {
@@ -93,6 +97,12 @@ public class EntityRenderer implements Renderable{
 		shader.stop();
 		
 	}
+	/**
+	 * Gönderilen entitynin kameranýn içerisinde ise çizdir deðil ise çizdirme durumlarýný kontrol eden bir metot.Aslýnda metot uzunluðu eni 80 boyu 60 olan bir kutunun içerisinde olan 
+	 * entityleri tespit edip çizilmesi için gereken bayraðý çalýþtýrýyor.
+	 * @param entity
+	 * @return
+	 */
 	private boolean canRender(Entity entity) {
 		if(entity.getPosition().x + Maths.min.x * entity.getScale().x> camera.getPosition().x + 80 ||
 				entity.getPosition().x +Maths.max.x * entity.getScale().x < camera.getPosition().x - 80) {
@@ -104,6 +114,11 @@ public class EntityRenderer implements Renderable{
 		}
 		return true ;
 	}
+	/**
+	 * Gönderilen entityi hem tutulduðu hashmapden hem de Jbox2ddeki bodysini silmeye yarayan metot.
+	 * @param entityDelete	silinecek entity
+	 * @param world			entitynin bodysinin silineceði dünya
+	 */
 	public void delete(Entity entityDelete, World world) {
 		Iterator<Texture> iter1= entities.keySet().iterator() ;
 		while(iter1.hasNext()) {
@@ -126,6 +141,10 @@ public class EntityRenderer implements Renderable{
 			
 		}
 	}
+	/**
+	 * Tüm entityleri silmeye yarayan metottur.
+	 * @param world		dünyadaki tüm bodylari silmek için gönderilen parametre
+	 */
 	public void clear(World world) {
 		Iterator<Texture> iter1= entities.keySet().iterator() ;
 		while(iter1.hasNext()) {
@@ -153,7 +172,11 @@ public class EntityRenderer implements Renderable{
 		shader.clean();
 		
 	}
-	
+	/**
+	 * Entitynin kaydedilmesi iþlemi. Çizilmesi istenilen entity hashmape kaydedilir.
+	 * Bu metot ayrýca entitynin sahip olduðu bodyi de world a kaydeder.
+	 * @param entity	çizilmesi istenilen entity parametre olarak gönderiliyor.
+	 */
 	public void addEntity(Entity entity) {
 		List<Entity> entityList = entities.get(entity.getTexture()) ;
 		

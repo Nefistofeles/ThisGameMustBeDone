@@ -13,6 +13,13 @@ public class GUI {
 	private Matrix4 transformationMatrix ;
 	private float worldPosition ;
 	
+	/**
+	 * Ekrana çizilecek buttonlar vs. gibi þekillerin bilgilerini tutan sýnýftýr.
+	 * @param texture	ekrandaki resmi
+	 * @param position	ekrandaki pozisyonu
+	 * @param scale		ekrandaki boyutu
+	 */
+	
 	public GUI(Texture texture, Vec2 position, Vec2 scale) {
 		this.texture = texture ;
 		this.position = position;

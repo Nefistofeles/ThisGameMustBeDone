@@ -10,6 +10,14 @@ import renderer.Renderer;
 
 public class MouseOrtho {
 	
+	/**
+	 * Orthographics cameraya uygun mouse sýnýfý
+	 * Temel mantýðý tüm ekrana çizilen objeler projection ve viewmatrix yani ekran geniþletme ve kamera matrixleri ile çarpýlýr. Bunu mouse içinde yaptýklarýný düþünürsek 
+	 * bu matrixleri tersleyerek mouseun konumunu benim normalde bulunduðum dünya koordinatlarýna döndürebilir ve objeler ile çakýþýp çakýþmadýðýný algýlayabilirim
+	 * 
+	 * {@link http://antongerdelan.net/opengl/raycasting.html}
+	 */
+	
 	private Camera camera;
 	private Vec2 mousePos2 ;
 	private Vec3 mousePos3 ;
@@ -20,7 +28,12 @@ public class MouseOrtho {
 		mousePos3 = new Vec3(0,0,0) ;
 	}
 	
-	
+	/**
+	 * Camera hareketi olan dünya için mouse konumunu hesaplayan metottur.
+	 * ilk mouse pozisyonlarý display geniþliði ve yüksekliðine bölünür.
+	 * Daha sonra inversi alýnan Matrixler ile çarpýlýr.  
+	 * @return
+	 */
 	private Vec3 getMousePosition() {
 		float mouseX = (float)2 * Mouse.getX() / Display.getWidth() -1 ;
 		float mouseY = (float)2 * Mouse.getY() / Display.getHeight() -1 ;
@@ -30,6 +43,10 @@ public class MouseOrtho {
 		
 		return new Vec3(v.x, v.y ,-1); 
 	}
+	/**
+	 * Normal yapýlan iþlemin kameranýn sahip olduðu matrix ile çarpýlmayan halidir. Kamera hareket etse bile ekranda hareket etmeyen nesneler (button vs) için kullanýlýr.
+	 * @return
+	 */
 	private Vec3 getGUIMousePosition() {
 		float mouseX = (float)2 * Mouse.getX() / Display.getWidth() -1 ;
 		float mouseY = (float)2 * Mouse.getY() / Display.getHeight() -1 ;
@@ -39,6 +56,7 @@ public class MouseOrtho {
 		
 		return new Vec3(v.x, v.y ,-1); 
 	}
+
 	private Vec2 normalizeDeviceCoords() {
 		float x = (float)Mouse.getX() / (float)Display.getWidth() ; 
 		float y = (float)Mouse.getY() / (float)Display.getHeight() ;

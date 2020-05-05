@@ -16,6 +16,10 @@ import utils.Camera;
 import utils.MouseOrtho;
 
 public class Renderer implements Renderable{
+	/**
+	 *  Tüm renderer sýnýflarýný bir arada belli sýra ile update ve render iþlemlerinin gerçekleþmesini saðlayan sýnýftýr.
+	 *  Diðer tüm renderer sýnýflarýna bu sýnýf ile eriþim saðlanýr.
+	 */
 
 	private EntityRenderer entityRenderer ;
 	private FontRenderer fontRenderer ;

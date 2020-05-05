@@ -20,6 +20,7 @@ public class Mesh {
 		Mesh mesh = null ;
 		try {
 			mesh = (Mesh) clone();
+			
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

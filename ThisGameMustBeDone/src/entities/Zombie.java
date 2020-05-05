@@ -7,15 +7,17 @@ import animationSystem.AnimationData;
 import animationSystem.AnimationEnum;
 import dataStructure.Mesh;
 import dataStructure.Texture;
+import loader.Creator;
 
 public class Zombie extends Enemy {
+
 	
-	public Zombie(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition) {
-		super(mesh, texture, position, rotation, scale, worldPosition);
-		animationData = new AnimationData();
+	public Zombie(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition, AnimationData animationData, Creator creator) {
+		super(mesh, texture, position, rotation, scale, worldPosition,animationData, creator);
+		/*animationData = new AnimationData();
 		animationData.addAnimationData(AnimationEnum.idle, 4, 0);
-		animationData.addAnimationData(AnimationEnum.run, 6, 1);
-		animation = new Animation(texture, animationData);
+		animationData.addAnimationData(AnimationEnum.walk, 6, 1);
+		animation = new Animation(texture, animationData);*/
 
 	}
 
@@ -24,7 +26,11 @@ public class Zombie extends Enemy {
 		// TODO Auto-generated method stub
 
 	}
-
+	/**
+	 * Enemyler için belirlenen yürüme metodudur. öklid üçgeni dediðimiz formülü kullanarak belirlenen karakterin pozisyonuna doðru yürür.
+	 * Belirli bir mesafede ilerlediði karaktere saldýrý yapar.
+	 * @param entity gönderilen entitye doðru yürür.
+	 */
 	private void move(Entity entity) {
 		Vec2 entityPosition = entity.getPosition();
 		float bMinusaY = entityPosition.y - position.y;
@@ -44,7 +50,7 @@ public class Zombie extends Enemy {
 			
 		}else {
 			entity.hurt(this);
-			animation.animate(AnimationEnum.run) ;
+			animation.animate(AnimationEnum.idle,15) ;
 			body.applyForceToCenter(new Vec2(0, 0));
 		}
 

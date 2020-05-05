@@ -8,6 +8,12 @@ import utils.Matrix4;
 
 public class GUIIntersection {
 
+	/**
+	 * Gonderilen GUI mouse ile çakýþýyor mu onun kontrolünü yapar.
+	 * @param gui		kontrol edilmesi istenilen gui
+	 * @param point		mouseun ekrandaki pozisyonu
+	 * @return			çakýþýp çakýþmadýðýna dair bilgi
+	 */
 	public boolean isIntersect(GUI gui, Vec2 point) {
 		
 		Vec2 min = new Vec2(-0,-1);

@@ -6,6 +6,12 @@ import java.io.InputStreamReader;
 
 public class Utils {
 	
+	/**
+	 * Dosya okuma metodu
+	 * @param name	dosya urlsi
+	 * @return		dosyanýn string halindeli içinde bulunan deðerler
+	 * @throws Exception	oluþan hatalarý bu metodu çaðýran metoda fýrlatma iþlemi
+	 */
 	public static StringBuilder loadFile(String name) throws Exception{
 		
 		InputStream in = Class.class.getResourceAsStream(name) ;

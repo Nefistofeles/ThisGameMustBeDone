@@ -24,11 +24,19 @@ public class TextureLoader {
 	public static final int TextureLinear = GL11.GL_LINEAR_MIPMAP_LINEAR ;
 	
 	private List<Texture> textures ;
-	
+	/**
+	 * Sýnýfýn temel amacý .png tabanlý resim dosyalarýný okuyup openglin ekrana basabileceði þekile dönüþtürüp kullanmak.
+	 */
 	public TextureLoader() {
 		textures = new ArrayList<Texture>();
 	}
-
+	/**
+	 * Ýsmi girilen texturein dosyadan okuyup ayrýþtýrýp {@code Texture} sýnýfýna idsini göndererek kaydýnýn saðlandýðý metottur.
+	 * @param name		okunacak resmin dosyadaki ismi
+	 * @param nearest	OpenGLde çizdirilecek resmin uzaklaþtýkça bulanýklaþmasýnýn olup olmayacaðýnýn ayarý.
+	 * @param bias		resim uzaklaþtýkça veya yakýnlaþtýkça istenilen netliðin katsayýsý. Týrtýklý ve bozuk görülen resimler için bu ayar yapýlýr.
+	 * @return			bir {@code Texture} nesnesi dönderir.
+	 */
 	public Texture loadTexture(String name, int nearest, float bias) {
 		TextureData data = null ;
 		if(!name.contains(".png"))
@@ -67,6 +75,11 @@ public class TextureLoader {
 	
 	}
 	
+	/**
+	 * PNGDecoder kullanarak resmin ayrýþtýrmasýný yapan metottur.
+	 * @param url		resmin adresi
+	 * @return			{@code TextureData} þeklinde bir data tutucu dönderir.
+	 */
 	public TextureData textureDecomposition(String url) {
 		TextureData textureData = null ;
 		InputStream in = Class.class.getResourceAsStream(url);
@@ -82,6 +95,9 @@ public class TextureLoader {
 		}
 		return textureData ;
 	}
+	/**
+	 * Program kapandýðýnda ramda tutulan resim kayýtlarý idlerine göre silinir.
+	 */
 	public void clean() {
 		for(Texture texture : textures) {
 			GL11.glDeleteTextures(texture.getTextureID());

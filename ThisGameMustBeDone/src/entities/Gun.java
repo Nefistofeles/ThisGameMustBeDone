@@ -8,15 +8,17 @@ import java.util.Queue;
 
 import org.jbox2d.common.Vec2;
 
+import animationSystem.AnimationData;
 import dataStructure.Mesh;
 import dataStructure.Texture;
+import loader.Creator;
 
 public class Gun extends Entity{
 
 	 private Queue<Bullet> bullets ;
 
-	public Gun(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition) {
-		super(mesh, texture, position, rotation, scale, worldPosition);
+	public Gun(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition, AnimationData animationData,Creator creator) {
+		super(mesh, texture, position, rotation, scale, worldPosition, animationData,creator);
 		bullets = new LinkedList<>();
 	}
 

@@ -15,14 +15,19 @@ public class Game implements Runnable{
 	private DisplayManager display ;
 	private GameManager game ;
 	private Creator creator ;
+	private World world ;
 	private boolean isRun ;
-
+	/**
+	 * Oyunun genel çalýþtýrma yönetim kýsmýdýr.
+	 */
 	public Game() {
 		isRun = false ;
 		
 		
 	}
-
+	/**
+	 * Threadi çalýþtýrýp oyunun baþlamasýný saðlayan metot.
+	 */
 	public synchronized void start() {
 		if(thread == null)
 			thread = new Thread(this) ;
@@ -32,6 +37,9 @@ public class Game implements Runnable{
 		}
 			
 	}
+	/**
+	 * Threadin durdurulup oyunun son bulmasýný ve gereksiz tüm oyun öðelerinin silinmesini saðlayan sýnýftýr.
+	 */
 	public synchronized void stop() {
 		try {
 			if(isRun) {
@@ -46,10 +54,14 @@ public class Game implements Runnable{
 			System.exit(-1);
 		}
 	}
+	/**
+	 * Program baþladýðýnda gerekli olan öðelerin programa yüklenmesini veya gerekli sýnýflarýn oluþturulmasýný saðlayan metottur.
+	 */
 	private void init() {
 		display = new DisplayManager();
 		display.create(1366,768);
-		creator = new Creator();
+		world = new World(new Vec2(0,0)) ;
+		creator = new Creator(world);
 		game = new GameManager(creator);
 		game.init();
 		
@@ -57,8 +69,11 @@ public class Game implements Runnable{
 		EnableOpenGL.blendFunc(false);
 		EnableOpenGL.enableDepthTest(true);
 		EnableOpenGL.enableStencilTest(false);
-		GL11.glClearColor(0.0f, 0.0f, 0.0f, 1);
+		GL11.glClearColor(1.0f, 1.0f, 1.0f, 1);
 	}
+	/**
+	 * Programýn ekran kapatma tuþuna veya kapatma isteði gönderilene kadar sonsuz bir döngüde çalýþmasýný saðlayan metottur.
+	 */
 	@Override
 	public void run() {
 		init();

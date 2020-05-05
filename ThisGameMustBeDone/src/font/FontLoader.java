@@ -19,12 +19,20 @@ public class FontLoader {
 	private Vec2 textureScaleWH;
 	private String textureFileName;
 	private int charCount;
+	
+	/**
+	 * fontun .fnt tabanlý dosyadan bilgilerinin okunamasýna olanak saðlayan sýnýftýr.
+	 */
 
 	public FontLoader() {
 		characters = new HashMap<Integer, Character>();
 		lineParser = new HashMap<String, String>();
 	}
 
+	/**
+	 * basit dosya okuma sýnýfý
+	 * @param fileName	gönderilecek .fnt tabanlý dosyanýn ismi
+	 */
 	public void loadFont(String fileName) {
 
 		try {
@@ -37,6 +45,11 @@ public class FontLoader {
 		}
 	}
 
+	/**
+	 * Gereken özelliklere göre dosyadaki bilgilerin parse edilmesini saðlayan sýnýf
+	 * @param reader		parse edilmesi için BufferedReader sýnfýnýn gönderilesi gerekiyor.
+	 * @throws Exception	olabilir hatalarýn çaðrýlan metoda fýrlatýlmasý
+	 */
 	private void parseFile(BufferedReader reader) throws Exception {
 		splitLine(reader);
 		size = Integer.parseInt(lineParser.get("size"));
@@ -65,6 +78,10 @@ public class FontLoader {
 
 	}
 
+	/**
+	 * okunan bilgilere göre karakterler oluþturuluyor ve bir hashmap e kendi ascii kodlarýna yani idlerine göre kaydedilir.
+	 * @return
+	 */
 	private Character loadCharacter() {
 		int id = Integer.parseInt(lineParser.get("id"));
 
@@ -84,6 +101,12 @@ public class FontLoader {
 				textureW, textureH, xoffset, yoffset, xadvance);
 	}
 
+	/**
+	 * bir satýr okunduðunda o satýr genelde sahip olunan bilgiler belli bir = sembolüne göre yazýlmýþtýr. Yani o satýrý okuyup lineParser denilen hashmape kaydediliyor.
+	 * Ýstenildiði zaman o satýr için o bilgiye eriþim saðlanýyor. Bir sonraki satýr okunduðunda önceki satýrýn bilgisi silinir.
+	 * @param reader		Dosya okuma sýnýfý
+	 * @throws Exception	çaðrýlan sýnýfa oluþacak hatalarý fýrlatma
+	 */
 	private void splitLine(BufferedReader reader) throws Exception {
 		lineParser.clear();
 		String line = null;

@@ -3,7 +3,15 @@ package renderer;
 import org.lwjgl.opengl.GL11;
 
 public class EnableOpenGL {
+	/**
+	 * Bazen OpenGL'de çizim yapýlýrken bazý özellikleri kapatmak veya açmak gerekir. Bu sýnýf bunu gerçekleþtirmektedir.
+	 *
+	 */
 
+	/**
+	 * 
+	 * @param isEnable	Çizilen objenin ekranda görünmeyen arka tarafýnýn çizilip çizilmemesinin kararý
+	 */
 	public static void culling(boolean isEnable) {
 		if(isEnable) {
 			GL11.glEnable(GL11.GL_CULL_FACE);
@@ -16,6 +24,10 @@ public class EnableOpenGL {
 		}
 		
 	}
+	/**
+	 * 
+	 * @param isDisable	Derinlik faktörünün (z ekseni) tamamen iptal edilmesi
+	 */
 	public static void disableDepthTestWithMask(boolean isDisable) {
 		if(isDisable) {
 			GL11.glDepthMask(false);
@@ -33,6 +45,10 @@ public class EnableOpenGL {
 		}
 	}
 
+	/**
+	 * 
+	 * @param isEnable	Alpha deðeri 0 olan resmin ekranda çizilmemesi
+	 */
 	public static void blendAdditiveFunc(boolean isEnable) {
 		if(isEnable) {
 			GL11.glEnable(GL11.GL_BLEND) ;
@@ -42,12 +58,21 @@ public class EnableOpenGL {
 			GL11.glDisable(GL11.GL_BLEND);
 		}
 	}
+	/**
+	 * 
+	 * @param isEnable	ekrandaki resim çizilen bölgesinin veya çizilmeyen bölgesinin olmasýnýn ayarý
+	 * ben hiç kullanmadýðým için daha tam bilmiyorum
+	 */
 	public static void enableStencilTest(boolean isEnable) {
 		if(isEnable) {
 			GL11.glEnable(GL11.GL_STENCIL_TEST);
 		}else
 			GL11.glDisable(GL11.GL_STENCIL_TEST);
 	}
+	/**
+	 * 
+	 * @param isEnable derinlik faktörünün açýlýp kapanmasý.
+	 */
 	public static void enableDepthTest(boolean isEnable) {
 		if(isEnable) {
 			GL11.glEnable(GL11.GL_DEPTH_TEST) ;

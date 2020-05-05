@@ -13,6 +13,20 @@ public class Character {
 	private double yoffset;
 	private double xadvance;
 
+	/**
+	 * font programý : {@link https://github.com/libgdx/libgdx/wiki/Hiero}
+	 * hierro ile oluþturulan fontun özelliklerinin okunup her bir karakterin özelliðinin kaydedildiði sýnýftýr.
+	 * @param id			ascii karakter idsi
+	 * @param xMax			opengl tabanýnda oluþturulan karakterin x ekseninin uzunluðu
+	 * @param yMax			opengl tabanýnda oluþturulan karakterin y ekseninin uzunluðu
+	 * @param textureX		font atlasda texture seçilmesi için gereken font atlas x koordinatý
+	 * @param textureY		font atlasda texture seçilmesi için gereken font atlas y koordinatý
+	 * @param textureWidth	font atlasda texture seçilmesi için gereken font atlas geniþlik koordinatý
+	 * @param textureHeight font atlasda texture seçilmesi için gereken font atlas uzunluk koordinatý
+	 * @param xoffset		karakterin boyutuna göre x eksenindeki pozisyonu
+	 * @param yoffset		karakterin boyutuna göre y eksenindeki pozisyonu
+	 * @param xadvance		oluþturulan harften sonra diðer harfin ne kadar uzaklýkta baþlayacaðýný belirten kýsým
+	 */
 
 	public Character(int id, double xMax, double yMax, double textureX, double textureY, double textureWidth,
 			double textureHeight, double xoffset, double yoffset, double xadvance) {

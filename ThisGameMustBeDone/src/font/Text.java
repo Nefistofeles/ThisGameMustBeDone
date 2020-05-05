@@ -14,6 +14,15 @@ public class Text {
 	private Vec2 scale ;
 	private float worldPosition ;
 	private Matrix4 transformationMatrix ;
+	/**
+	 * Sýnýfýn temel amacý oluþturulan textin bilgilerinin tutulmasýdýr.
+	 * @param text		Ekrana çizilmesi istenilen text
+	 * @param position	ekrandaki pozisyonu
+	 * @param rotation	döndürülmek isteniyorsa istenilen bilgi
+	 * @param scale		ekrandaki boyutu
+	 * 
+	 * Tabi çizim yapýlýrken ilgili shadera bilgiler matrix üzerinden gönderildiði için bir transformation matrixde oluþturulur.
+	 */
 	
 	public Text(String text, Vec2 position, float rotation, Vec2 scale) {
 		
