@@ -2,60 +2,75 @@ package entities;
 
 import org.jbox2d.common.Vec2;
 
+import animationSystem.AnimationData;
+import animationSystem.AnimationEnum;
 import dataStructure.Mesh;
 import dataStructure.Texture;
 import loader.Creator;
 import utils.DisplayManager;
 
-public class Bullet extends Entity{
-	
-	private float time ;
+public class Bullet extends Entity {
 
-	public Bullet(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition, Creator creator) {
-		super(mesh, texture, position, rotation, scale, worldPosition, creator);
-		this.speed.x = 100 ;
-		this.speed.y = 100 ;
-		
-	}
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		Entity entity = new Bullet(this.mesh, texture.getClone(), new Vec2(this.position.x, this.position.y),this.rotation , new Vec2(this.scale.x , this.scale.y), this.worldPosition,creator) ;
-		return entity;
+	private float time;
+
+	public Bullet(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition,
+			AnimationData animationData, Creator creator) {
+		super(mesh, texture, position, rotation, scale, worldPosition, animationData, creator);
+		this.speed.x = 1000;
+		this.speed.y = 1000;
 	}
 
 	@Override
-	protected void attack(Entity entity) {
+	public void attack(Entity entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	/**
 	 * kendine özgü hareket metodu
 	 */
 	private void move() {
-		body.applyForceToCenter(new Vec2(speed.x * direction.x , speed.y * direction.y));
+		Vec2 entityPosition = creator.getMouse().getMousePos2() ;
+		float bMinusaY = entityPosition.y - position.y;
+		float bMinusaX = entityPosition.x - position.x;
+
+		float hipotenus = (float) Math.hypot(bMinusaY, bMinusaX);
+
+		float radians = (float) Math.atan2(bMinusaY, bMinusaX);
+		float degree = (float) (radians * 180 / Math.PI);
+		rotation = degree - 90;
+		body.applyForceToCenter(new Vec2(speed.x * direction.x, speed.y * direction.y));
+		if (hipotenus > 20) {
+			Vec2 degreeVector = new Vec2((float) Math.cos(radians), (float) Math.sin(radians));
+			direction.x = degreeVector.x ;
+			direction.y = degreeVector.y ;
+			body.applyForceToCenter(new Vec2(speed.x * direction.x, speed.y * direction.y));
+			
+		}else {
+			body.applyForceToCenter(new Vec2(0, 0));
+		}
 	}
 
 	@Override
-	protected void hurt(Entity entity) {
+	public void hurt(Entity entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	protected void died() {
+	public void died() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
 
 	@Override
 	public void update() {
 		move();
-		time += DisplayManager.getFrameTime() ;
-		if(time > 2) {
-			this.isDead = true ;
+		time += DisplayManager.getFrameTime();
+		if (time > 2) {
+			this.isDead = true;
 		}
-		
+
 	}
 
 }

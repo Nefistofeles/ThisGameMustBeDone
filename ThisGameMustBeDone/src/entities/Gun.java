@@ -23,19 +23,19 @@ public class Gun extends Entity{
 	}
 
 	@Override
-	protected void attack(Entity entity) {
+	public void attack(Entity entity) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void hurt(Entity entity) {
+	public void hurt(Entity entity) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void died() {
+	public void died() {
 		// TODO Auto-generated method stub
 		
 	}

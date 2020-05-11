@@ -17,15 +17,14 @@ public class Mesh {
 		return mesh ;
 	}
 	public Mesh getClone() {
-		Mesh mesh = null ;
+		
 		try {
-			mesh = (Mesh) clone();
-			
+			return (Mesh) clone() ;
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return mesh ;
+		return null;
 	}
 	public int getMeshID() {
 		return meshID;

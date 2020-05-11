@@ -12,7 +12,23 @@ public class AnimationData {
 	 */
 
 	private Map<AnimationEnum, Vector2f> animationData ;
-	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		AnimationData animation = new AnimationData();
+		for(AnimationEnum anim : animationData.keySet())
+			animation.addAnimationData(anim,(int)animationData.get(anim).x , (int)animationData.get(anim).y);
+		
+		return animation ;
+	}
+	public AnimationData getClone() {
+		try {
+			return (AnimationData) clone() ;
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null ;
+	}
 	public AnimationData() {
 		animationData = new HashMap<AnimationEnum , Vector2f>();
 		
@@ -29,5 +45,7 @@ public class AnimationData {
 	public Map<AnimationEnum, Vector2f> getAnimationData() {
 		return animationData;
 	}
-	
+	public void setAnimationData(Map<AnimationEnum, Vector2f> animationData) {
+		this.animationData = animationData;
+	}
 }

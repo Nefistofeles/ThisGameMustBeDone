@@ -8,6 +8,7 @@ import java.util.Map;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
+import dataStructure.EntityData;
 import dataStructure.Mesh;
 import dataStructure.Texture;
 import entities.Entity;
@@ -23,10 +24,11 @@ public class Creator {
 	private MouseOrtho mouse;
 	private Camera camera;
 	private Renderer renderer ;
+	private LoadCharacterInformation lc ;
 	
 	private Map<String, Mesh> meshes ;
 	private Map<String,Texture> textures ;
-	
+	private Map<String, EntityData> entityDatas ;
 	/**
 	 * Bir varlýk oluþturulacak ise bu sýnýfa ihtiyacý vardýr.
 	 * @param world		varlýðýn dünyadaki fizik özelliðinin kaydedildiði sýnýf.
@@ -34,13 +36,28 @@ public class Creator {
 
 	public Creator(World world) {
 		this.world = world ;
-		meshes = new HashMap<String,Mesh>();
-		textures = new HashMap<String,Texture>();
+		meshes = new HashMap<String, Mesh>();
+		textures = new HashMap<String, Texture>();
+		entityDatas = new HashMap<String, EntityData>();
 		loader = new Loader(world);
 		camera = new Camera();
 		mouse = new MouseOrtho(camera);
 
 		renderer = new Renderer(loader, mouse, camera, world);
+		lc = new LoadCharacterInformation(this) ;
+	}
+	
+	public Entity loadEntity(String name, Vec2 position, Vec2 scale, short categoryBits, short maskBits) {
+		EntityData entitydata = entityDatas.get(name) ;
+		if(entitydata == null) {
+			entitydata = lc.loadCharacter(name) ;
+			entityDatas.put(name, entitydata) ;
+			
+		}
+		Entity entity = entitydata.loadEntity(position, scale,categoryBits, maskBits); 
+		renderer.addEntity(entity);
+		return entity ;
+		
 	}
 	/**
 	 * Birden fazla mesh bilgisi dosyasý okunmasýn diye bir hashmape kaydediliyor. Gerektiði zaman klonlayýp kullanýr.
@@ -50,7 +67,7 @@ public class Creator {
 	public Mesh loadMesh(String name) {
 		Mesh meshdata = meshes.get(name) ;
 		if(meshdata == null) {
-			meshdata = loader.getObjLoader().loadObjFile(name);
+			meshdata = loader.getObjLoader().loadObjMeshData(name);
 			meshes.put(name, meshdata) ;
 			return meshdata ;
 		}else {
@@ -70,7 +87,7 @@ public class Creator {
 	public Texture loadTexture(String name,int nearest, float bias) {
 		Texture texturedata = textures.get(name) ;
 		if(texturedata == null) {
-			texturedata = loader.getTextureLoader().loadTexture(name, nearest, bias) ;
+			texturedata =loader.getTextureLoader().loadTexture(name, nearest, bias) ;
 			textures.put(name, texturedata) ;
 			return texturedata ;
 		}else {
@@ -97,7 +114,9 @@ public class Creator {
 			return texturedata ;
 		}else {
 			System.out.println("this mesh already exist");
-			return texturedata.getClone() ;
+			Texture texture = texturedata.getClone() ;
+			texture.setTextureRowColumn(row, column);
+			return texture ;
 		}
 	}
 

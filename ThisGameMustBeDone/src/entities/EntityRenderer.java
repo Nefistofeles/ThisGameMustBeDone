@@ -13,6 +13,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+import contactlisteners.EntityContactListener;
 import dataStructure.Texture;
 import renderer.Draw;
 import renderer.EnableOpenGL;
@@ -24,23 +25,23 @@ import utils.Maths;
 public class EntityRenderer implements Renderable{
 	
 	private EntityShader shader ;
-	private Map<Texture, List<Entity>> entities ;
-	private List<Body> worldPhysics ;
+	private Map<Integer, List<Entity>> entities ;
 	private Camera camera ;
-	private Player player ;
 	private World world ;
+	private Player player ;
 	
 	public EntityRenderer(Camera camera, World world) {
 		this.camera = camera ;
 		this.world = world ;
+		player = null ;
+
 	}
 	
 
 	@Override
 	public void init() {
 		shader = new EntityShader();
-		entities = new HashMap<Texture, List<Entity>>();
-		worldPhysics = new ArrayList<Body>();
+		entities = new HashMap<Integer, List<Entity>>();
 		shader.start();
 		shader.loadProjectionMatrix(DisplayManager.getProjectionmatrix());
 		shader.stop();
@@ -49,40 +50,52 @@ public class EntityRenderer implements Renderable{
 
 	@Override
 	public void update() {
-		for(Texture texture : entities.keySet()) {
-			List<Entity> entitylist = entities.get(texture) ;
-			for(Entity entity : entitylist) {
-				entity.update();
-				
-				if(entity instanceof Enemy) {
-					entity.attack(player);
+		Iterator<Integer> iter1 = entities.keySet().iterator();
+		while (iter1.hasNext()) {
+			int texture = iter1.next();
+			
+			List<Entity> entitylist = entities.get(texture);
+			Iterator<Entity> iter = entitylist.iterator();
+			while (iter.hasNext()) {
+				Entity e = (Entity) iter.next();
+				if(!e.isDead()) {
+					e.update();
+					if(e instanceof Enemy) {
+						if(player != null)
+							e.attack(player);
+					}
+					
+				}else {
+					e.died();
+					deleteDirectly(iter, e);
+					
 				}
-				if(entity.isDead()) {
-					delete(entity, world);
-				}
-				
 			}
+			/*if(entitylist.isEmpty()) {
+				iter1.remove();
+			}*/
+			
+
 		}
 	}
-
 	@Override
 	public void render() {
 		shader.start();
 		shader.loadViewMatrix(camera.getViewMatrix());
 		//EnableOpenGL.blendFunc(true);
 		
-		for(Texture texture : entities.keySet()) {
+		for(int texture : entities.keySet()) {
 			List<Entity> entityList = entities.get(texture) ;
 			
 			Draw.enableTexture(texture);
 			//texture atlasda sadece seçilen resmin ekrana çizdirilmesi için shadera gönderilen bilgiler. Ayrýca animasyon içinde kullanýlýyor.
-			shader.loadTextureProperty(texture.getNumberOfRows(), texture.getNumberOfColumn(), texture.getTextureXoffSet(), texture.getTextureYoffSet());
 			
 			for(Entity entity : entityList) {
 				if(canRender(entity)) {
 					Draw.enableVAO(entity.getMesh().getMeshID());
 					Draw.enableVertexAttribArray(2);
-					
+
+					shader.loadTextureProperty(entity.getTexture().getNumberOfRows(), entity.getTexture().getNumberOfColumn(), entity.getTexture().getTextureXoffSet(), entity.getTexture().getTextureYoffSet());
 					shader.loadTransformationMatrix(entity.getTransformationMatrix());
 					shader.loadWorldPosition(entity.getWorldPosition());
 					Draw.renderOptimize(entity.getMesh().getVertexCount());
@@ -119,11 +132,15 @@ public class EntityRenderer implements Renderable{
 	 * @param entityDelete	silinecek entity
 	 * @param world			entitynin bodysinin silineceði dünya
 	 */
+	private void deleteDirectly(Iterator<Entity> iter, Entity entity) {
+		world.destroyBody(entity.getBody());
+		iter.remove();
+	}
 	public void delete(Entity entityDelete, World world) {
-		Iterator<Texture> iter1= entities.keySet().iterator() ;
+		Iterator<Integer> iter1= entities.keySet().iterator() ;
 		while(iter1.hasNext()) {
-			Texture texture = iter1.next();
-			List<Entity> entitylist = entities.get(texture);
+			int id = iter1.next();
+			List<Entity> entitylist = entities.get(id);
 			Iterator<Entity> iter = entitylist.iterator();
 			while (iter.hasNext()) {
 				Entity entity = iter.next() ;
@@ -135,9 +152,9 @@ public class EntityRenderer implements Renderable{
 					iter.remove();
 				}
 			}
-			if (entitylist.isEmpty()) {
+			/*if (entitylist.isEmpty()) {
 				iter1.remove();
-			}
+			}*/
 			
 		}
 	}
@@ -146,10 +163,10 @@ public class EntityRenderer implements Renderable{
 	 * @param world		dünyadaki tüm bodylari silmek için gönderilen parametre
 	 */
 	public void clear(World world) {
-		Iterator<Texture> iter1= entities.keySet().iterator() ;
+		Iterator<Integer> iter1= entities.keySet().iterator() ;
 		while(iter1.hasNext()) {
-			Texture texture = iter1.next();
-			List<Entity> entitylist = entities.get(texture);
+			int id = iter1.next();
+			List<Entity> entitylist = entities.get(id);
 			Iterator<Entity> iter = entitylist.iterator();
 			while (iter.hasNext()) {
 				Entity entity = iter.next() ;
@@ -158,13 +175,10 @@ public class EntityRenderer implements Renderable{
 				iter.remove();
 				
 			}
-			if (entitylist.isEmpty()) {
+			/*if (entitylist.isEmpty()) {
 				iter1.remove();
-			}
+			}*/
 			
-		}
-		for(int i = 0 ; i < worldPhysics.size(); i++) {
-			world.destroyBody(worldPhysics.get(i));
 		}
 	}
 	@Override
@@ -172,22 +186,28 @@ public class EntityRenderer implements Renderable{
 		shader.clean();
 		
 	}
+	public void createList(Texture texture) {
+		List<Entity> entitylist = entities.get(texture.getTextureID()) ;
+		if(entitylist == null) {
+			entitylist = new ArrayList<Entity>();
+			entities.put(texture.getTextureID(), entitylist) ;
+		}
+	}
 	/**
 	 * Entitynin kaydedilmesi iþlemi. Çizilmesi istenilen entity hashmape kaydedilir.
 	 * Bu metot ayrýca entitynin sahip olduðu bodyi de world a kaydeder.
 	 * @param entity	çizilmesi istenilen entity parametre olarak gönderiliyor.
 	 */
 	public void addEntity(Entity entity) {
-		List<Entity> entityList = entities.get(entity.getTexture()) ;
+		List<Entity> entityList = entities.get(entity.getTexture().getTextureID()) ;
 		
 		if(entityList == null) {
 			entityList = new ArrayList<Entity>();
 			entityList.add(entity); 
-			worldPhysics.add(entity.getBody()) ;
-			entities.put(entity.getTexture(), entityList) ;
+			
+			entities.put(entity.getTexture().getTextureID(), entityList) ;
 		}else {
 			entityList.add(entity) ;
-			worldPhysics.add(entity.getBody()) ;
 		}
 		if(entity instanceof Player) {
 			this.player = (Player) entity ;

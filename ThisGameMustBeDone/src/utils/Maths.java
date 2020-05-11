@@ -69,6 +69,25 @@ public class Maths {
 		}
 		return array;
 	}
+	public static Vec2[] arrayToVec2Array(float[] data) {
+		System.out.println("------------ data length " + data.length);
+		Vec2[] array = new Vec2[data.length / 2];
+		for (int i = 0; i < data.length; i+=2) {
+			array[i/2] = new Vec2(data[i], data[i+1]) ;
+			
+		}
+		System.out.println(array.length);
+		return array;
+	}
+	public static Vec2[] multipleVec2Datas(Vec2[] data, Vec2 scale) {
+		System.out.println("--------------scale " + scale.toString());
+		for(int i = 0 ; i < data.length ; i++) {
+			System.out.println(" -------------------------  " + data[i].toString());
+			data[i].x *= scale.x ;
+			data[i].y *= scale.y ;
+		}
+		return data ;
+	}
 	/**
 	 * girilen değerlere göre opengle uygun koordinatları giren bir metot.
 	 * @param data		girilen değerlerin kaydedileceği liste

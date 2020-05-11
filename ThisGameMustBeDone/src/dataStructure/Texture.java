@@ -23,14 +23,13 @@ public class Texture {
 	}
 	
 	public Texture getClone() {
-		Texture texture = null ;
 		try {
 			return (Texture) this.clone() ;
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return this ;
+		return null ;
 	}
 	/**
 	 * resim eðer atlas ise yani birden fazla resim içeriyorsa bölmek için girilmesi gereken deðerler.

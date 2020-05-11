@@ -25,22 +25,44 @@ public class Animation {
 	 * @param fps oynatılacak resmin fpsi
 	 * 
 	 */
-	public void animate(AnimationEnum a, int fps) {
-		Vector2f v = data.getAnimationData().get(a);
-		time += DisplayManager.getFrameTime();
-		texture.setTextureIndexY((int)v.y);
-		if (time > DisplayManager.getFrameTime() * fps) {
-			time = 0;
-			texture.setTextureIndexX(texture.getTextureIndexX() + 1);
-			if (texture.getTextureIndexX() >=(int) v.x) {
-				texture.setTextureIndexX((int) 0);
-				//return false ;
-			}
+	public boolean animate(AnimationEnum a, int fps) {
+		if(data.getAnimationData().get(a) != null) {
+			Vector2f v = data.getAnimationData().get(a);
+			time += DisplayManager.getFrameTime();
+			texture.setTextureIndexY((int)v.y);
+			if (time > DisplayManager.getFrameTime() * fps) {
+				time = 0;
+				texture.setTextureIndexX(texture.getTextureIndexX() + 1);
+				if (texture.getTextureIndexX() >=(int) v.x) {
+					texture.setTextureIndexX((int) 0);
+					return true ;
+				}
 
+			}
 		}
-		
-		//return true ;
+		return false ;
 
 	}
+	public boolean animateOnes(AnimationEnum a, int fps) {
+		int i = 0 ; 
+		while((i += 1) != texture.getTextureIndexX()) {
+			if(data.getAnimationData().get(a) != null) {
+				Vector2f v = data.getAnimationData().get(a);
+				time += DisplayManager.getFrameTime();
+				texture.setTextureIndexY((int)v.y);
+				if (time > DisplayManager.getFrameTime() * fps) {
+					time = 0;
+					texture.setTextureIndexX(texture.getTextureIndexX() + 1);
+					if (texture.getTextureIndexX() >=(int) v.x) {
+						texture.setTextureIndexX((int) 0);
+						
+					}
 
+				}
+			}
+		}
+		
+		return true ;
+
+	}
 }

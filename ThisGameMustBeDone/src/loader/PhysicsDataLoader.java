@@ -8,6 +8,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Filter;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
@@ -64,7 +65,7 @@ public class PhysicsDataLoader {
 	 * @param isSensor		bir algýlayýcý mý. Yani obje olmayýp sadece çakýþma olup tepki olmayacaðý durumlar bu seçenek seçilir.
 	 * @return
 	 */
-	public Fixture loadFixture(Shape shape, Body body, float restitution, float density, float friction, boolean isSensor) {
+	public Fixture loadFixture(Shape shape, Body body, float restitution, float density, float friction, boolean isSensor, short categoryBits, short maskBits) {
 		FixtureDef fixturedef = new FixtureDef();
 		System.out.println("fixturedef oluþturuldu...");
 		fixturedef.restitution = restitution;
@@ -77,8 +78,11 @@ public class PhysicsDataLoader {
 		System.out.println("sürtünme katsayýsý girildi... " + friction);
 		fixturedef.isSensor = isSensor ;
 		System.out.println("algýlayýcý mý : " + isSensor);
+		fixturedef.filter.categoryBits = categoryBits ;		//kendi türü
+		fixturedef.filter.maskBits = maskBits ;				//bunlarla collide olacak
 		Fixture fixture = body.createFixture(fixturedef) ;
 		System.out.println("fixture oluþturuldu... ");
+
 		
 		return fixture ;
 	}
@@ -97,7 +101,7 @@ public class PhysicsDataLoader {
 	 * @param isBullet		hýzlý nesneler için seçilen seçenek
 	 */
 	public void createPhysics(Entity entity, Vec2[] vertices,Vec2 scale,BodyType bodyType, boolean fixedRotation,
-			ShapeType shapeType, float restitution, float density, float friction,boolean isSensor, boolean isBullet ) {
+			ShapeType shapeType, float restitution, float density, float friction,boolean isSensor, boolean isBullet , short categoryBits, short maskBits) {
 		Body body = loadBody(entity, bodyType, fixedRotation, isBullet) ;
 		
 		Shape shape = null ;
@@ -106,8 +110,8 @@ public class PhysicsDataLoader {
 		}else if(shapeType == ShapeType.CIRCLE) {
 			shape = loadShape(entity.getPosition(), scale.x) ;
 		}
-		Fixture fixture = loadFixture(shape, body, restitution, density, friction, isSensor); 
-		entity.setPhysics(body, shape, fixture);
+		Fixture fixture = loadFixture(shape, body, restitution, density, friction, isSensor, categoryBits, maskBits); 
+		
 		
 	}
 	/**

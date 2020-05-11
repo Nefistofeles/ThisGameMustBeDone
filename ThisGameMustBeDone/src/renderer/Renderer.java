@@ -67,6 +67,9 @@ public class Renderer implements Renderable{
 		guiRenderer.clean();
 		
 	}
+	public void createhashList(Texture texture) {
+		entityRenderer.createList(texture);
+	}
 	public void addEntity(Entity entity) {
 		entityRenderer.addEntity(entity);
 		

@@ -69,7 +69,7 @@ public class Game implements Runnable{
 		EnableOpenGL.blendFunc(false);
 		EnableOpenGL.enableDepthTest(true);
 		EnableOpenGL.enableStencilTest(false);
-		GL11.glClearColor(1.0f, 1.0f, 1.0f, 1);
+		GL11.glClearColor(0.1f, 1.0f, 1.0f, 1);
 	}
 	/**
 	 * Programýn ekran kapatma tuþuna veya kapatma isteði gönderilene kadar sonsuz bir döngüde çalýþmasýný saðlayan metottur.

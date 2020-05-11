@@ -9,6 +9,7 @@ import java.util.List;
 import org.jbox2d.common.Vec2;
 
 import dataStructure.Mesh;
+import dataStructure.OBJFileData;
 
 public class OBJFileLoader {
 	
@@ -27,7 +28,11 @@ public class OBJFileLoader {
 	 * @param name res dosyasýndaki yüklenecek olan .obj tabanlý file ismi.
 	 * @return eðer dosya bulunursa Mesh sýnýfýndan nesne döndürecek.
 	 */
-	public Mesh loadObjFile(String name) {
+	public Mesh loadObjMeshData(String name) {
+		OBJFileData data = loadObjFile(name) ;
+		return meshLoader.loadMesh(data.getVertices(), data.getTextureCoords(), data.getIndices()) ;
+	}
+	public OBJFileData loadObjFile(String name) {
 		try {
 			System.out.println("loaded file name : " + name);
 			InputStream in = Class.class.getResourceAsStream("/res/" + name + ".obj") ;
@@ -79,7 +84,7 @@ public class OBJFileLoader {
 				System.out.println("vertex deðerleri : " + vertex.toString());
 			}
 			
-			return meshLoader.loadMesh(verticesArray, textureCoordsArray, indicesArray) ;
+			return new OBJFileData(verticesArray, textureCoordsArray, indicesArray) ;
 			
 		} catch (Exception e) {
 			System.out.println(name + " is not found");
