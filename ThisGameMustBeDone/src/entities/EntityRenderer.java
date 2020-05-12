@@ -81,34 +81,46 @@ public class EntityRenderer implements Renderable{
 	@Override
 	public void render() {
 		shader.start();
+		System.out.println("shader baþlatýldý");
 		shader.loadViewMatrix(camera.getViewMatrix());
+		EnableOpenGL.enableDepthTest(true);
+		System.out.println("deep test aktif edildi");
 		//EnableOpenGL.blendFunc(true);
 		
 		for(int texture : entities.keySet()) {
 			List<Entity> entityList = entities.get(texture) ;
-			
+			System.out.println("çizilecek entitynin resminin idsi : " + texture);
 			Draw.enableTexture(texture);
+			System.out.println("texture enable edildi");
 			//texture atlasda sadece seçilen resmin ekrana çizdirilmesi için shadera gönderilen bilgiler. Ayrýca animasyon içinde kullanýlýyor.
 			
 			for(Entity entity : entityList) {
 				if(canRender(entity)) {
 					Draw.enableVAO(entity.getMesh().getMeshID());
+					System.out.println("vao aktil edildi : " + entity.getMesh().getMeshID());
 					Draw.enableVertexAttribArray(2);
-
+					System.out.println("vertex attribute deðerleri aktif edildi.");
 					shader.loadTextureProperty(entity.getTexture().getNumberOfRows(), entity.getTexture().getNumberOfColumn(), entity.getTexture().getTextureXoffSet(), entity.getTexture().getTextureYoffSet());
+					System.out.println("texture deðerleri aktif edildi " + entity.getTexture().getNumberOfRows()+" "+ entity.getTexture().getNumberOfColumn()+" "+ entity.getTexture().getTextureXoffSet()+ " "+entity.getTexture().getTextureYoffSet());
 					shader.loadTransformationMatrix(entity.getTransformationMatrix());
+					System.out.println("matrix shadera yüklendi");
 					shader.loadWorldPosition(entity.getWorldPosition());
+					System.out.println("entity z deðeri shadera yüklendi");
 					Draw.renderOptimize(entity.getMesh().getVertexCount());
+					System.out.println("index deðerleri kullanýlacak þekilde entity mesh load edildi");
 					
 					Draw.disableVertexAttribArray(2);
+					System.out.println("vertex attributelar disable edildi");
 					Draw.disableVAO();
+					System.out.println("vao disable edildi.");
 				}
 			}
 		}
-		
+		EnableOpenGL.enableDepthTest(false);
+		System.out.println("deep test disable edildi");
 		//EnableOpenGL.blendFunc(false);
 		shader.stop();
-		
+		System.out.println("shader durduruldu");
 	}
 	/**
 	 * Gönderilen entitynin kameranýn içerisinde ise çizdir deðil ise çizdirme durumlarýný kontrol eden bir metot.Aslýnda metot uzunluðu eni 80 boyu 60 olan bir kutunun içerisinde olan 
@@ -204,13 +216,15 @@ public class EntityRenderer implements Renderable{
 		if(entityList == null) {
 			entityList = new ArrayList<Entity>();
 			entityList.add(entity); 
-			
+			System.out.println("entity listeye eklendi");
 			entities.put(entity.getTexture().getTextureID(), entityList) ;
 		}else {
 			entityList.add(entity) ;
+			System.out.println("entity listeye eklendi");
 		}
 		if(entity instanceof Player) {
 			this.player = (Player) entity ;
+			System.out.println("entity player nesnesi");
 		}
 	}
 

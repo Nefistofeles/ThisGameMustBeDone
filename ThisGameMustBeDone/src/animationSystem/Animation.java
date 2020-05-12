@@ -25,12 +25,12 @@ public class Animation {
 	 * @param fps oynatılacak resmin fpsi
 	 * 
 	 */
-	public boolean animate(AnimationEnum a, int fps) {
+	public boolean animate(AnimationEnum a, int onedividefps) {
 		if(data.getAnimationData().get(a) != null) {
 			Vector2f v = data.getAnimationData().get(a);
 			time += DisplayManager.getFrameTime();
 			texture.setTextureIndexY((int)v.y);
-			if (time > DisplayManager.getFrameTime() * fps) {
+			if (time > DisplayManager.getFrameTime() * onedividefps) {
 				time = 0;
 				texture.setTextureIndexX(texture.getTextureIndexX() + 1);
 				if (texture.getTextureIndexX() >=(int) v.x) {
@@ -43,14 +43,14 @@ public class Animation {
 		return false ;
 
 	}
-	public boolean animateOnes(AnimationEnum a, int fps) {
+	public boolean animateOnes(AnimationEnum a, int onedividefps) {
 		int i = 0 ; 
 		while((i += 1) != texture.getTextureIndexX()) {
 			if(data.getAnimationData().get(a) != null) {
 				Vector2f v = data.getAnimationData().get(a);
 				time += DisplayManager.getFrameTime();
 				texture.setTextureIndexY((int)v.y);
-				if (time > DisplayManager.getFrameTime() * fps) {
+				if (time > DisplayManager.getFrameTime() * onedividefps) {
 					time = 0;
 					texture.setTextureIndexX(texture.getTextureIndexX() + 1);
 					if (texture.getTextureIndexX() >=(int) v.x) {

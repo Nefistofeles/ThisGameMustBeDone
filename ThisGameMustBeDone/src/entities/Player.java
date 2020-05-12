@@ -32,13 +32,14 @@ public class Player extends Entity {
 	@Override
 	public void update() {
 		move();
+		System.out.println("move metodu çaðrýldý.");
 		if(Mouse.isButtonDown(0)){
 			creator.loadEntity("bullet", new Vec2(this.getPosition().x, this.getPosition().y), new Vec2(3,3), EntityType.BIT_BULLET, (short)(EntityType.BIT_ZOMBIE | EntityType.BIT_BULLET)) ;
 		}else if(Mouse.isButtonDown(1)){
 			creator.loadEntity("zombie", new Vec2(creator.getMouse().getMousePos2().clone()), new Vec2(7,7),EntityType.BIT_ZOMBIE,(short)(EntityType.BIT_ZOMBIE | EntityType.BIT_BULLET | EntityType.BIT_PLAYER)) ;
 		}
 		//animasyonun çalýþtýrýlmasý
-		animation.animate(AnimationEnum.idle, 15);
+		//animation.animate(AnimationEnum.idle, 15);
 	}
 
 	/**
@@ -58,21 +59,43 @@ public class Player extends Entity {
 		//klavye ile karakterin dünyada hareket etmesi
 		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 			direction.y = 1;
+			System.out.println("w tuþuna basýldý");
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
 			direction.y = -1;
+			System.out.println("s tuþuna basýldý");
 		} else {
 			direction.y = 0;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
+			System.out.println("a tuþuna basýldý");
 			direction.x = -1;
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
 			direction.x = 1;
+			System.out.println("d tuþuna basýldý");
 		} else {
 			direction.x = 0;
 		}
-		//creator.getCamera().setPosition(this.position.x, this.position.y);
+		if(direction.x == 1) {
+			animation.animate(AnimationEnum.walk_right, 4);
+			System.out.println("saða doðru karakterin animasyonu etkilenleþtirildi");
+		}else if(direction.x == -1) {
+			animation.animate(AnimationEnum.walk_left, 4);
+			System.out.println("sola doðru karakterin animasyonu etkilenleþtirildi");
+		}else if(direction.y == 1) {
+			animation.animate(AnimationEnum.walk_up, 4);
+			System.out.println("üste doðru karakterin animasyonu etkilenleþtirildi");
+		}else if(direction.y == -1) {
+			animation.animate(AnimationEnum.walk_down, 4);
+			System.out.println("aþaðý doðru karakterin animasyonu etkilenleþtirildi");
+		}else {
+			animation.animate(AnimationEnum.idle, 4);
+			System.out.println("normal duruþ karakterin animasyonu etkilenleþtirildi");
+		}
+		creator.getCamera().setPosition(this.position.x, this.position.y);
+		System.out.println("camera pozisyonu karakterin pozisyonuna tekrar güncellendi");
 		body.applyForceToCenter(new Vec2(speed.x * direction.x , speed.y * direction.y));
-		
+		System.out.println("karakterin bodysinin merkezine güç uygulandý : " + new Vec2(speed.x * direction.x , speed.y * direction.y));
+		System.out.println("karakter pozisyonu güncellendi.");
 	}
 
 	@Override

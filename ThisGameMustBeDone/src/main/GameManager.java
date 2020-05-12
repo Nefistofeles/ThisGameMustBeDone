@@ -16,6 +16,7 @@ import contactlisteners.EntityContactListener;
 import contactlisteners.EntityType;
 import dataStructure.Mesh;
 import dataStructure.Texture;
+import entities.Background;
 import entities.Entity;
 import entities.Player;
 import entities.Zombie;
@@ -42,8 +43,6 @@ public class GameManager implements Renderable{
 	
 	private Text text ;
 	private Creator creator ;
-	private Entity entity ;
-	private Entity dayi ;
 	
 	public GameManager(Creator creator) {
 		this.creator = creator ;
@@ -62,11 +61,16 @@ public class GameManager implements Renderable{
 		creator.getRenderer().createhashList(zombie);
 		Texture bullet = creator.loadTexture("bullet", TextureLoader.TextureNearest, TextureLoader.DEFAULT_BIAS) ;
 		creator.getRenderer().createhashList(bullet);
-		Texture character = creator.loadTexture("character", TextureLoader.TextureNearest, TextureLoader.DEFAULT_BIAS) ;
+		Texture character = creator.loadTexture("character_tile", TextureLoader.TextureNearest, TextureLoader.DEFAULT_BIAS) ;
 		creator.getRenderer().createhashList(character);
+		Texture harita = creator.loadTexture("harita", TextureLoader.TextureNearest, TextureLoader.DEFAULT_BIAS) ;
+		creator.getRenderer().createhashList(harita);
 		
+		Entity background = new Background(creator.loadMesh("untitled"), creator.loadTexture("harita", TextureLoader.TextureLinear, TextureLoader.DEFAULT_BIAS),new Vec2(0,0), 0 , new Vec2(100,100),-5,creator );
+		creator.getRenderer().addEntity(background);
 		
-		creator.loadEntity("character",null,null, EntityType.BIT_PLAYER, EntityType.BIT_ZOMBIE) ;
+		creator.loadEntity("character_tile",null,null, EntityType.BIT_PLAYER, EntityType.BIT_ZOMBIE) ;
+		
 		/*creator.loadEntity("zombie",null,null) ;
 		creator.loadEntity("bullet",new Vec2(20,20),null) ;*/
 

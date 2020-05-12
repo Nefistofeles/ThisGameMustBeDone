@@ -120,10 +120,10 @@ public class Creator {
 		}
 	}
 
-	public Mesh getMeshClone(String name) {
+	private Mesh getMeshClone(String name) {
 		return meshes.get(name).getClone() ;
 	}
-	public Texture getTextureClone(String name) {
+	private Texture getTextureClone(String name) {
 		return textures.get(name).getClone() ;
 	}
 

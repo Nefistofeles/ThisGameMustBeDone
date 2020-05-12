@@ -72,6 +72,7 @@ public class Renderer implements Renderable{
 	}
 	public void addEntity(Entity entity) {
 		entityRenderer.addEntity(entity);
+		System.out.println("oluþturulan entity EntityRenderer sýnýfýna gönderildi");
 		
 	}
 	public void addText(Text text, Texture texture) {

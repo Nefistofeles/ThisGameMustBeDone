@@ -166,16 +166,27 @@ public class LoadCharacterInformation {
 		if (!idle.equals("0")) {
 			entitydata.loadAnimationData(AnimationEnum.idle, idle);
 		}
-		String walk = data.get("walk");
-		System.out.println("walk : " + walk);
-		if (!walk.equals("0")) {
-			entitydata.loadAnimationData(AnimationEnum.walk, walk);
+		String walk_left = data.get("walk_left");
+		System.out.println("walk_left : " + walk_left);
+		if (!walk_left.equals("0")) {
+			entitydata.loadAnimationData(AnimationEnum.walk_left, walk_left);
 		}
-		String run = data.get("run");
-		System.out.println("run : " + run);
-		if (!run.equals("0")) {
-			entitydata.loadAnimationData(AnimationEnum.run, run);
+		String walk_up = data.get("walk_up");
+		System.out.println("walk_up : " + walk_up);
+		if (!walk_up.equals("0")) {
+			entitydata.loadAnimationData(AnimationEnum.walk_up, walk_up);
 		}
+		String walk_right = data.get("walk_right");
+		System.out.println("walk_right : " + walk_right);
+		if (!walk_right.equals("0")) {
+			entitydata.loadAnimationData(AnimationEnum.walk_right, walk_right);
+		}
+		String walk_down = data.get("walk_down");
+		System.out.println("walk_left : " + walk_down);
+		if (!walk_down.equals("0")) {
+			entitydata.loadAnimationData(AnimationEnum.walk_down, walk_down);
+		}
+
 		String attack = data.get("attack");
 		System.out.println("attack : " + attack);
 		if (!attack.equals("0")) {

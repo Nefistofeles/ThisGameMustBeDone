@@ -1,0 +1,5 @@
+e entity=player
+t texture=character_tile x=5 y=4 idle=4/0 walk_left=5/2 walk_up=5/1 walk_right=5/3 walk_down=5/1 attack=0 crauch=0 dead=0 hurt=0
+r model=untitled
+b bodytype=dynamic position=0/0 rotation=0 scale=5/5 worldposition=1 fixedrotation=true isbullet=false
+f model=character_body shapetype=polygon radius=0 restitution=0.01 density=0.01 friction=0.01 issensor=false
