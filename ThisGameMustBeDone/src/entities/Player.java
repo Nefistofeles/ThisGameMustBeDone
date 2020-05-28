@@ -19,27 +19,49 @@ import utils.MouseOrtho;
 
 public class Player extends Entity {
 
+	private float time ;
+	private float bulletTime ;
+	private boolean isClicked ;
+	private int score ;
 	
 	public Player(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition,AnimationData animationData, Creator creator) {
 		super(mesh, texture, position, rotation, scale, worldPosition,animationData, creator);
 
 		this.speed.x = 300 ;
 		this.speed.y = 300 ;
-
+		time = 0 ;
+		bulletTime = 0 ;
+		isClicked = false ;
+		score = 0 ;
 	}
 
 
 	@Override
 	public void update() {
-		move();
-		System.out.println("move metodu çaðrýldý.");
-		if(Mouse.isButtonDown(0)){
-			creator.loadEntity("bullet", new Vec2(this.getPosition().x, this.getPosition().y), new Vec2(3,3), EntityType.BIT_BULLET, (short)(EntityType.BIT_ZOMBIE | EntityType.BIT_BULLET)) ;
-		}else if(Mouse.isButtonDown(1)){
-			creator.loadEntity("zombie", new Vec2(creator.getMouse().getMousePos2().clone()), new Vec2(7,7),EntityType.BIT_ZOMBIE,(short)(EntityType.BIT_ZOMBIE | EntityType.BIT_BULLET | EntityType.BIT_PLAYER)) ;
+		if(this.isDead == false ) {
+			move();
+			System.out.println("move metodu çaðrýldý.");
+			if(Mouse.isButtonDown(0) && !isClicked){
+				creator.loadEntity("bullet", new Vec2(this.getPosition().x, this.getPosition().y), new Vec2(3,3), EntityType.BIT_BULLET, (short)(EntityType.BIT_ZOMBIE | EntityType.BIT_BULLET)) ;
+				isClicked = true ;
+				score-- ;
+			}
+			if(isClicked) {
+				bulletTime += DisplayManager.getFrameTime() ;
+				if(bulletTime > 0.2f) {
+					bulletTime = 0 ;
+					isClicked = false ;
+				}
+			}
+		}else {
+			died();
 		}
+		
 		//animasyonun çalýþtýrýlmasý
 		//animation.animate(AnimationEnum.idle, 15);
+		/*else if(Mouse.isButtonDown(1)){
+			creator.loadEntity("zombie", new Vec2(creator.getMouse().getMousePos2().clone()), new Vec2(7,7),EntityType.BIT_ZOMBIE,(short)(EntityType.BIT_ZOMBIE | EntityType.BIT_BULLET | EntityType.BIT_PLAYER)) ;
+		}*/
 	}
 
 	/**
@@ -105,13 +127,29 @@ public class Player extends Entity {
 
 	@Override
 	public void hurt(Entity entity) {
-	
 		
+		if(health > 0) {
+			if(time >= 0.1f) {
+				health-=10 ;
+				time = 0 ;
+			}else {
+				time += DisplayManager.getFrameTime() ;
+			}
+			
+		}else {
+			died();
+		}
 	}
 
 	@Override
 	public void died() {
-		
+		isDead = true ;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 }

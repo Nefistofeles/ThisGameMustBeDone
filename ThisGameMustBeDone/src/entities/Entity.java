@@ -36,6 +36,7 @@ public abstract class Entity implements Cloneable {
 	protected Animation animation;
 	protected Vec2 direction;
 	protected boolean isDead;
+	protected int health ;
 
 	public Entity(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition,
 			AnimationData animationData, Creator creator) {
@@ -54,6 +55,7 @@ public abstract class Entity implements Cloneable {
 		animation = new Animation(texture, animationData);
 		direction = new Vec2(0, 0);
 		isDead = false;
+		health = 100 ;
 
 	}
 
@@ -74,7 +76,7 @@ public abstract class Entity implements Cloneable {
 		animation = null;
 		direction = new Vec2(0, 0);
 		isDead = false;
-
+		health = 100 ;
 	}
 
 
@@ -196,5 +198,11 @@ public abstract class Entity implements Cloneable {
 
 	public void setDead(boolean isDead) {
 		this.isDead = isDead;
+	}
+	public int getHealth() {
+		return health;
+	}
+	public void setHealth(int health) {
+		this.health = health;
 	}
 }

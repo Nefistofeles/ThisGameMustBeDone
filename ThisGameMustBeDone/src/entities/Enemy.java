@@ -8,7 +8,8 @@ import dataStructure.Texture;
 import loader.Creator;
 
 public abstract class Enemy extends Entity{
-	
+
+	protected Player player ;
 
 	public Enemy(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition, AnimationData animationData, Creator creator) {
 		super(mesh, texture, position, rotation, scale, worldPosition,animationData,creator);
@@ -17,5 +18,9 @@ public abstract class Enemy extends Entity{
 	public Enemy(Mesh mesh, Texture texture, Vec2 position, float rotation, Vec2 scale, float worldPosition, Creator creator) {
 		super(mesh, texture, position, rotation, scale, worldPosition, creator);
 		
+	}
+	
+	public void setFollow(Entity entity) {
+		this.player = (Player) entity ;
 	}
 }

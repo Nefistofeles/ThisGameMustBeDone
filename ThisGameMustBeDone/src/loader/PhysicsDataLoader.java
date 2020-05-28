@@ -1,5 +1,6 @@
 package loader;
 
+import org.jbox2d.collision.shapes.ChainShape;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.collision.shapes.Shape;
@@ -146,5 +147,28 @@ public class PhysicsDataLoader {
 		shape.m_radius = radius ;
 		System.out.println("radius deðeri girildi : " +radius);
 		return shape ;
+	}
+	
+	public void loadScreenShape(Vec2[] vertices) {
+		BodyDef bodydef = new BodyDef() ;
+		bodydef.type = BodyType.STATIC ; 
+		bodydef.position = new Vec2(0,0) ;
+		bodydef.angle = 0 ;
+		bodydef.fixedRotation = true ;
+		bodydef.linearDamping = 0 ; 
+		Body body = world.createBody(bodydef) ;
+		
+		ChainShape shape = new ChainShape();
+		shape.createChain(vertices, vertices.length);
+		
+		FixtureDef fixturedef = new FixtureDef();
+		fixturedef.restitution = 1f;
+		fixturedef.shape = shape ;
+		fixturedef.density =1f ;
+		fixturedef.friction = 0.2f ;
+		
+		Fixture fixture = body.createFixture(fixturedef) ;
+		
+		
 	}
 }

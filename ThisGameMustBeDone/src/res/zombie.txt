@@ -1,5 +1,5 @@
 e entity=zombie
-t texture=zombie x=1 y=1 idle=0 walk_left=0 walk_up=0 walk_right=0 walk_down=0 attack=0 crauch=0 dead=0 hurt=0
+t texture=zombieatlas x=6 y=3 idle=6/0 walk_left=4/1 walk_up=4/1 walk_right=4/1 walk_down=4/1 attack=0 crauch=0 dead=5/2 hurt=0
 r model=untitled
 b bodytype=dynamic position=20/0 rotation=0 scale=5/5 worldposition=1 fixedrotation=true isbullet=false
 f model=zombiebody shapetype=polygon radius=0 restitution=0.01 density=0.01 friction=0.01 issensor=false

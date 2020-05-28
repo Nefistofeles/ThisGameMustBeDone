@@ -18,6 +18,7 @@ import contactlisteners.EntityType;
 import entities.Bullet;
 import entities.Entity;
 import entities.Player;
+import entities.Wall;
 import entities.Zombie;
 import loader.Creator;
 import loader.TextureLoader;
@@ -132,6 +133,10 @@ public class EntityData {
 			entity = new Bullet(mesh.getClone(), texture.getClone(), position, rotation, scale, worldPosition,
 					animationData.getClone(), creator);
 			System.out.println("bullet");
+		} else if (entityType == EntityType.BIT_WALL) {
+			entity = new Wall(mesh.getClone(), texture.getClone(), position, rotation, scale, worldPosition,
+					animationData.getClone(), creator);
+			System.out.println("wall");
 		}
 
 		return entity;

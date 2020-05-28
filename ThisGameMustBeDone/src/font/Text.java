@@ -3,6 +3,7 @@ package font;
 import org.jbox2d.common.Vec2;
 
 import dataStructure.Mesh;
+import loader.FontMeshLoader;
 import utils.Matrix4;
 
 public class Text {
@@ -34,8 +35,9 @@ public class Text {
 		this.transformationMatrix = Matrix4.createTransformationMatrix(position, rotation, scale);
 	}
 	
-	public void setText(String text) {
+	public void setText(String text, FontMeshLoader fmLoader) {
 		this.text = text;
+		fmLoader.loadMeshforFont(this);
 	}
 
 	public String getText() {

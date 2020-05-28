@@ -13,5 +13,5 @@ void main(void){
 
 	gl_Position = projectionMatrix * transformationMatrix * vec4(position, worldPosition, 1.0 ) ;
 
-	out_textureCoords = textureCoords ;
+	out_textureCoords = textureCoords;
 }

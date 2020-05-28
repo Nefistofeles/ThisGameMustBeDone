@@ -18,7 +18,8 @@ public class DisplayManager {
 	
 	//ekraný belli bir oranlar çarparak geniþletme 
 	//Normalde 1,1 iken 80 e 60 a çýkýyor.
-	private static final Matrix4 projectionMatrix = new Orthographics(80, 60).getProjectionMatrix() ;
+	private static final Orthographics ortho = new Orthographics(80, 60) ;
+	
 	
 	public DisplayManager() {
 		lastTime = 0 ;
@@ -102,7 +103,10 @@ public class DisplayManager {
 	 * @return
 	 */
 	public static Matrix4 getProjectionmatrix() {
-		return projectionMatrix;
+		return ortho.getProjectionMatrix();
+	}
+	public static Orthographics getOrtho() {
+		return ortho ;
 	}
 	
 	

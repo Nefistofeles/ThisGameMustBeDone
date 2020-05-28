@@ -71,6 +71,8 @@ public class LoadCharacterInformation {
 						entitydata.setEntityType(EntityType.BIT_ZOMBIE);
 					else if(type.equals("bullet"))
 						entitydata.setEntityType(EntityType.BIT_BULLET);
+					else if(type.equals("wall"))
+						entitydata.setEntityType(EntityType.BIT_WALL);
 					System.out.println("entity type : " + type);
 				}else if(line.startsWith("t ")) {
 					parse(line) ;

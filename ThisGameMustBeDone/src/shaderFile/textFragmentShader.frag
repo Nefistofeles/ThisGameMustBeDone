@@ -13,6 +13,6 @@ void main(void){
 		discard ;
 	}
 
-	out_Color = vec4(1,0,1, texture.a) ;
+	out_Color = vec4(0.20, 0.43, 0.92, texture.a) ;
 	//out_Color = vec4(1,0,1, 1) ;
 }

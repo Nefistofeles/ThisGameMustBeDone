@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 import org.lwjgl.opengl.GL11;
@@ -58,17 +59,9 @@ public class EntityRenderer implements Renderable{
 			Iterator<Entity> iter = entitylist.iterator();
 			while (iter.hasNext()) {
 				Entity e = (Entity) iter.next();
-				if(!e.isDead()) {
-					e.update();
-					if(e instanceof Enemy) {
-						if(player != null)
-							e.attack(player);
-					}
-					
-				}else {
-					e.died();
+				e.update();
+				if(e.isDead()) {
 					deleteDirectly(iter, e);
-					
 				}
 			}
 			/*if(entitylist.isEmpty()) {
@@ -104,6 +97,15 @@ public class EntityRenderer implements Renderable{
 					System.out.println("texture deðerleri aktif edildi " + entity.getTexture().getNumberOfRows()+" "+ entity.getTexture().getNumberOfColumn()+" "+ entity.getTexture().getTextureXoffSet()+ " "+entity.getTexture().getTextureYoffSet());
 					shader.loadTransformationMatrix(entity.getTransformationMatrix());
 					System.out.println("matrix shadera yüklendi");
+					if(entity instanceof Wall) {
+						Wall wall = (Wall)entity ;
+						if(wall.isxDown())
+							shader.loadTextureMultiplier(new Vec2(20,1));
+						else
+							shader.loadTextureMultiplier(new Vec2(1,20));
+					}else {
+						shader.loadTextureMultiplier(new Vec2(1,1));
+					}
 					shader.loadWorldPosition(entity.getWorldPosition());
 					System.out.println("entity z deðeri shadera yüklendi");
 					Draw.renderOptimize(entity.getMesh().getVertexCount());
